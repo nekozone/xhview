@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'network/getpeople.dart';
 
 void main() {
   runApp(const MyApp());
@@ -112,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const Peodog()
           ],
         ),
       ),
@@ -121,5 +123,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class Peodog extends StatefulWidget {
+  const Peodog({super.key});
+
+  @override
+  State<Peodog> createState() => _PeodogState();
+}
+
+class _PeodogState extends State<Peodog> {
+  String _people = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getPeople().then((value) => setState(() {
+          _people = value;
+        }));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(_people);
   }
 }
