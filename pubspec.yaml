@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.1.2
   dio_http2_adapter: ^2.2.0
   html: ^0.15.3
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:

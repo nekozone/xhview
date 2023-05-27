@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'pages/settings.dart';
+import 'tool/profile.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserProfiles.init();
   runApp(const XhView());
 }
 
@@ -12,6 +15,12 @@ class XhView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+          brightness: UserProfiles.darkmode == 'dark'
+              ? Brightness.dark
+              : UserProfiles.darkmode == 'light'
+                  ? Brightness.light
+                  : MediaQuery.of(context).platformBrightness),
       title: 'XhView',
       home: const Home(),
       routes: {
