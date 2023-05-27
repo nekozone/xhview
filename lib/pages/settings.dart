@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widget/chouti.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -6,7 +7,8 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("设置")),
+        drawer: const Chouti(page: 'settings'),
+        appBar: AppBar(title: const Text("设置"), centerTitle: true),
         body: const Center(
           child: Text("Settings"),
         ));
