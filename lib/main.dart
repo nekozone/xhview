@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'pages/settings.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'XhView',
       home: const Home(),
       routes: {
-        '/home': (context) => const Settings(),
+        '/home': (context) => const SettingsPage(),
         // '/about': (context) => const Dogabout(),
         // '/add': ((context) => const Addpage()),
         // '/settings': ((context) => const SetPage()),
@@ -46,7 +48,7 @@ class _HomeState extends State<Home> {
         }
         return true;
       },
-      child: const Settings(),
+      child: const SettingsPage(),
     );
   }
 }
