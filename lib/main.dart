@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/settings.dart';
 import 'tool/profile.dart';
@@ -14,22 +15,42 @@ class XhView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          brightness: UserProfiles.darkmode == 'dark'
-              ? Brightness.dark
-              : UserProfiles.darkmode == 'light'
-                  ? Brightness.light
-                  : MediaQuery.of(context).platformBrightness),
-      title: 'XhView',
-      home: const Home(),
-      routes: {
-        '/home': (context) => const SettingsPage(),
-        // '/about': (context) => const Dogabout(),
-        // '/add': ((context) => const Addpage()),
-        // '/settings': ((context) => const SetPage()),
+    return ChangeNotifierProvider(
+      create: (context) => Dkmodel(),
+      builder: (context, child) {
+        return MaterialApp(
+          theme: ThemeData(
+            brightness: context.watch<Dkmodel>().dkmode == 'dark'
+                ? Brightness.dark
+                : context.watch<Dkmodel>().dkmode == 'light'
+                    ? Brightness.light
+                    : MediaQuery.of(context).platformBrightness,
+          ),
+          // child: MaterialApp(
+          //   theme: ThemeData(
+          //     brightness: Provider.of<Dkmodel>(context).dkmode == 'dark'
+          //         ? Brightness.dark
+          //         : Provider.of<Dkmodel>(context).dkmode == 'light'
+          //             ? Brightness.light
+          //             : MediaQuery.of(context).platformBrightness,
+          //   ),
+          // brightness: UserProfiles.darkmode == 'dark'
+          //     ? Brightness.dark
+          //     : UserProfiles.darkmode == 'light'
+          //         ? Brightness.light
+          //         : MediaQuery.of(context).platformBrightness),
+          title: 'XhView',
+          home: const Home(),
+          routes: {
+            '/home': (context) => const SettingsPage(),
+            // '/about': (context) => const Dogabout(),
+            // '/add': ((context) => const Addpage()),
+            // '/settings': ((context) => const SetPage()),
+          },
+        );
       },
     );
+    ;
   }
 }
 
