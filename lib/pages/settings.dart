@@ -54,7 +54,7 @@ class _SetListState extends State<SetList> {
     return Column(
       children: [
         Text('夜间模式:$dkstring'),
-        Row(children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           ElevatedButton(
               onPressed: () => changeDkmode("system"),
               child: const Text('跟随系统')),
