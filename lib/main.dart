@@ -26,19 +26,6 @@ class XhView extends StatelessWidget {
                     ? Brightness.light
                     : MediaQuery.of(context).platformBrightness,
           ),
-          // child: MaterialApp(
-          //   theme: ThemeData(
-          //     brightness: Provider.of<Dkmodel>(context).dkmode == 'dark'
-          //         ? Brightness.dark
-          //         : Provider.of<Dkmodel>(context).dkmode == 'light'
-          //             ? Brightness.light
-          //             : MediaQuery.of(context).platformBrightness,
-          //   ),
-          // brightness: UserProfiles.darkmode == 'dark'
-          //     ? Brightness.dark
-          //     : UserProfiles.darkmode == 'light'
-          //         ? Brightness.light
-          //         : MediaQuery.of(context).platformBrightness),
           title: 'XhView',
           home: const Home(),
           routes: {

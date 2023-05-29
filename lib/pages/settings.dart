@@ -37,6 +37,7 @@ class _SetListState extends State<SetList> {
 
   Widget dkSet() {
     String dkstring = "";
+    ThemeData themeData = Theme.of(context);
     dkmode = UserProfiles.darkmode;
     switch (dkmode) {
       case "system":
@@ -51,24 +52,52 @@ class _SetListState extends State<SetList> {
       default:
         dkstring = "跟随系统";
     }
-    return Column(
-      children: [
-        Text('夜间模式:$dkstring'),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          ElevatedButton(
-              onPressed: () => changeDkmode("system"),
-              child: const Text('跟随系统')),
-          ElevatedButton(
-              onPressed: () => changeDkmode("light"), child: const Text('浅色')),
-          ElevatedButton(
-              onPressed: () => changeDkmode("dark"), child: const Text('深色')),
-        ])
-      ],
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Text(
+            '夜间模式:$dkstring',
+            style: TextStyle(
+              fontSize: themeData.textTheme.titleMedium?.fontSize,
+            ),
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            ElevatedButton.icon(
+                onPressed: () => changeDkmode("system"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: dkmode == "system"
+                        ? themeData.primaryColorDark
+                        : themeData.primaryColorLight),
+                icon: const Icon(Icons.settings_display),
+                label: const Text('跟随系统')),
+            ElevatedButton.icon(
+                onPressed: () => changeDkmode("light"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: dkmode == "light"
+                        ? themeData.primaryColorDark
+                        : themeData.primaryColorLight),
+                icon: const Icon(Icons.wb_sunny),
+                label: const Text('浅色')),
+            ElevatedButton.icon(
+                onPressed: () => changeDkmode("dark"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: dkmode == "dark"
+                        ? themeData.primaryColorDark
+                        : themeData.primaryColorLight),
+                icon: const Icon(Icons.dark_mode_sharp),
+                label: const Text('深色')),
+          ])
+        ],
+      ),
     );
   }
 
   void changeDkmode(String mode) {
     setState(() {
+      if (dkmode == mode) {
+        return;
+      }
       dkmode = mode;
       UserProfiles.setDarkmode(mode);
     });
