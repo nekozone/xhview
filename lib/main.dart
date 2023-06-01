@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/settings.dart';
+import 'pages/index.dart';
 import 'tool/profile.dart';
+import 'tool/status.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserProfiles.init();
+  await XhStatus.init();
   runApp(const XhView());
 }
 
@@ -29,7 +32,9 @@ class XhView extends StatelessWidget {
           title: 'XhView',
           home: const Home(),
           routes: {
-            '/home': (context) => const SettingsPage(),
+            '/home': (context) => const IndexPage(),
+            '/settings': (context) => const SettingsPage(),
+
             // '/about': (context) => const Dogabout(),
             // '/add': ((context) => const Addpage()),
             // '/settings': ((context) => const SetPage()),
@@ -65,7 +70,7 @@ class _HomeState extends State<Home> {
         }
         return true;
       },
-      child: const SettingsPage(),
+      child: const IndexPage(),
     );
   }
 }
