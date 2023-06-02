@@ -20,6 +20,7 @@ class BigDist {
 class BbsStatus {
   late BbsStatusInfo info;
   late List<BigDist> bigdists;
+  late String name;
   late bool isLogin = false;
   init() async {
     info = BbsStatusInfo();
@@ -36,6 +37,17 @@ class BbsStatus {
     } else {
       isLogin = !(loginElement[0].getElementsByTagName('a')[0].text == "登录");
     }
+    final nameelement = document.getElementsByClassName("ft");
+    if (nameelement.isEmpty) {
+      name = "undefined";
+    }
+    final namelink = nameelement[0].getElementsByTagName('a');
+    if (namelink.isEmpty) {
+      name = "undefined";
+    } else {
+      name = namelink[0].text;
+    }
+
     final elements = document.getElementsByClassName("box");
     if (elements.isEmpty) {
       return false;

@@ -11,7 +11,7 @@ class IndexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: const Chouti(page: 'home'),
-        appBar: AppBar(title: const Text("星海论坛"), centerTitle: true),
+        appBar: AppBar(title: Text(XhStatus.xhstatus.name), centerTitle: true),
         body: const SingleChildScrollView(
           child: IndexList(),
         ));
@@ -28,37 +28,48 @@ class IndexList extends StatelessWidget {
       return const Text("加载失败");
     }
     return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Column(children: distListWidget(themeData)),
+      padding: const EdgeInsets.only(left: 20, right: 10),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: distListWidget(themeData)),
     );
   }
 
   List<Widget> distListWidget(ThemeData themeData) {
     List<Widget> distWidgetList = [];
     for (var item in XhStatus.xhstatus.bigdists) {
-      distWidgetList.add(Container(
-        padding: const EdgeInsets.only(top: 10, bottom: 10),
-        child: Column(
-          children: [
-            Text(
-              item.title,
-              style: TextStyle(
-                fontSize: themeData.textTheme.titleMedium?.fontSize,
-              ),
+      distWidgetList.add(Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            item.title,
+            style: TextStyle(
+              // height: 0.2,
+
+              fontSize: themeData.textTheme.titleLarge?.fontSize,
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: Column(
-                children: distWidget(item.dists, themeData),
-              ),
-            )
-          ],
-        ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 3, bottom: 3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Divider(thickness: 1, color: themeData.primaryColorLight),
+                ...distWidget(item.dists, themeData)
+              ],
+            ),
+          )
+        ],
       ));
     }
+    distWidgetList.add(Divider(
+      thickness: 2,
+      color: themeData.primaryColorDark,
+    ));
     distWidgetList.add(Container(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
             "帖子数:${XhStatus.xhstatus.info.notenum}",
@@ -88,8 +99,13 @@ class IndexList extends StatelessWidget {
     List<Widget> distWidgetList = [];
     for (var item in dists) {
       distWidgetList.add(Container(
-        padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: TextButton(onPressed: () {}, child: Text(item.title)),
+        padding: const EdgeInsets.only(top: 1, bottom: 1),
+        child: TextButton(
+            onPressed: () {},
+            child: Text(item.title,
+                style: TextStyle(
+                  fontSize: themeData.textTheme.titleMedium?.fontSize,
+                ))),
       ));
     }
     return distWidgetList;
