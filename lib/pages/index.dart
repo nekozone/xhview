@@ -1,8 +1,11 @@
+import 'package:XhView/core/threadlist.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import '../tool/profile.dart';
+import 'package:flutter/material.dart';
 import '../widget/chouti.dart';
 import '../tool/status.dart';
+import '../tool/forummodel.dart';
 
 class IndexPage extends StatelessWidget {
   const IndexPage({super.key});
@@ -31,11 +34,11 @@ class IndexList extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20, right: 10),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: distListWidget(themeData)),
+          children: distListWidget(themeData, context)),
     );
   }
 
-  List<Widget> distListWidget(ThemeData themeData) {
+  List<Widget> distListWidget(ThemeData themeData, context) {
     List<Widget> distWidgetList = [];
     for (var item in XhStatus.xhstatus.bigdists) {
       distWidgetList.add(Column(
@@ -55,7 +58,7 @@ class IndexList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Divider(thickness: 1, color: themeData.primaryColorLight),
-                ...distWidget(item.dists, themeData)
+                ...distWidget(item.dists, themeData, context)
               ],
             ),
           )
@@ -95,13 +98,16 @@ class IndexList extends StatelessWidget {
     return distWidgetList;
   }
 
-  List<Widget> distWidget(List dists, themeData) {
+  List<Widget> distWidget(List dists, themeData, context) {
     List<Widget> distWidgetList = [];
     for (var item in dists) {
       distWidgetList.add(Container(
         padding: const EdgeInsets.only(top: 1, bottom: 1),
         child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/forum',
+                  arguments: ForumArgs(item.title, item.id));
+            },
             child: Text(item.title,
                 style: TextStyle(
                   fontSize: themeData.textTheme.titleMedium?.fontSize,

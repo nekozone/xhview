@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'pages/settings.dart';
 import 'pages/index.dart';
+import 'pages/forum.dart';
 import 'tool/profile.dart';
 import 'tool/status.dart';
 
@@ -34,6 +35,7 @@ class XhView extends StatelessWidget {
           routes: {
             '/home': (context) => const IndexPage(),
             '/settings': (context) => const SettingsPage(),
+            '/forum': (context) => const Forum(),
 
             // '/about': (context) => const Dogabout(),
             // '/add': ((context) => const Addpage()),
