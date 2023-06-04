@@ -21,7 +21,7 @@ class Threads {
   }
   Future<bool> getList({int ppage = 1}) async {
     page = ppage;
-    final res = await getHtml(
+    final res = await NetWorkRequest.getHtml(
         "https://bbs.dippstar.com/forum.php?mod=forumdisplay&fid=${id}&page=${ppage}&mobile=2");
     if (res.code != 200) {
       status = false;

@@ -1,5 +1,5 @@
 name: XhView
-description: A new Flutter project.
+description: XhView App.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -40,6 +40,9 @@ dependencies:
   html: ^0.15.3
   shared_preferences: ^2.1.1
   provider: ^6.0.5
+  dio_cookie_manager: ^3.0.0
+  cookie_jar: ^4.0.3
+  path_provider: ^2.0.15
 
 dev_dependencies:
   flutter_test:

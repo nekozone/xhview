@@ -36,14 +36,12 @@ class _ForumViewState extends State<ForumView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("initState");
     threads = Threads(widget.id);
     _firstpage = firstpage();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("FBUILD");
     return FutureBuilder(future: _firstpage, builder: fbuild);
   }
 
@@ -83,13 +81,11 @@ class _ForumViewState extends State<ForumView> {
       }
       return displayView();
     } else {
-      print("loading");
       return const Center(child: CircularProgressIndicator());
     }
   }
 
   Widget displayView() {
-    print("displayView");
     return ListView.separated(
         padding: const EdgeInsets.only(top: 0),
         separatorBuilder: (context, index) => const Divider(height: .0),
@@ -98,12 +94,11 @@ class _ForumViewState extends State<ForumView> {
         // shrinkWrap: true,
         // physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          print("itemBuilder:${index}");
           if (index == threadlist.length - 1) {
             if (nowPage < maxpage) {
               getpage(page: nowPage + 1);
               return Container(
-                padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+                padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
                 // alignment: Alignment.center,
                 child: const SizedBox(
                   width: 24.0,
@@ -116,7 +111,7 @@ class _ForumViewState extends State<ForumView> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "我是有底线的",
+                  "没有更多了",
                   style: TextStyle(color: Theme.of(context).disabledColor),
                 ),
               );
@@ -125,7 +120,22 @@ class _ForumViewState extends State<ForumView> {
             final item = threadlist[index];
             return ListTile(
               title: Text(item.title),
-              subtitle: Text(item.author),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(item.author),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.chat,
+                        size: Theme.of(context).textTheme.bodyMedium?.fontSize,
+                        // color: Theme.of(context).primaryColorDark,
+                      ),
+                      Text(item.replynum.toString())
+                    ],
+                  )
+                ],
+              ),
             );
           }
           // return ListTile(title: Text("$index"));

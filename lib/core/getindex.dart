@@ -25,7 +25,7 @@ class BbsStatus {
   init() async {
     info = BbsStatusInfo();
     bigdists = [];
-    final resdata = await getHtml(
+    final resdata = await NetWorkRequest.getHtml(
         "https://bbs.dippstar.com/forum.php?forumlist=1&mobile=no&mobile=1&simpletype=no");
     if (resdata.code != 200) {
       return false;
