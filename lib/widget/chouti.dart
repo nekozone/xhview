@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:XhView/main.dart';
 import 'package:flutter/material.dart';
-import '../tool/profile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+// import '../tool/profile.dart';
+import '../tool/status.dart';
 
 class Chouti extends StatelessWidget {
   const Chouti({Key? key, this.page = 'home'})
@@ -16,42 +17,95 @@ class Chouti extends StatelessWidget {
     return Drawer(
       child: ListView(children: <Widget>[
         DrawerHeader(
-          decoration: const BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: InkWell(
-              onTap: !UserProfiles.isLogin
-                  ? () {
-                      Navigator.pushNamed(context, '/login');
-                    }
-                  : null,
-              child: Column(
-                children: [
-                  const Padding(
-                      padding: EdgeInsets.only(top: 5),
-                      child: Text("XhView",
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold))),
-                  Expanded(
-                      child: Container(
-                    padding: const EdgeInsets.all(20),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(40)),
-                      child: Image.asset("assets/404.png"),
-                      // child: CachedNetworkImage(
-                      //   imageUrl: Doghouse.avatarurl,
-                      //   progressIndicatorBuilder:
-                      //       (context, url, downloadProgress) =>
-                      //           CircularProgressIndicator(
-                      //               value: downloadProgress.progress),
-                      //   errorWidget: (context, url, error) =>
-                      //       Image.asset("assets/404.png"),
-                      // ),
+            decoration: const BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: InkWell(
+                onTap: !XhStatus.xhstatus.isLogin
+                    ? () {
+                        Navigator.pushNamed(context, '/login');
+                      }
+                    : null,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: ClipOval(
+                        child: XhStatus.xhstatus.isLogin
+                            ? CachedNetworkImage(
+                                imageUrl: XhStatus.xhstatus.userinfo.avatar
+                                    .toString(),
+                                width: 80,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) =>
+                                        CircularProgressIndicator(
+                                            value: downloadProgress.progress),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset("assets/404.png"),
+                              )
+                            : Image.asset(
+                                "assets/404.png",
+                                width: 80,
+                              ),
+                      ),
                     ),
-                  ))
-                ],
-              )),
-        ),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 45, left: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                XhStatus.xhstatus.isLogin
+                                    ? XhStatus.xhstatus.userinfo.username
+                                    : '未登录',
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.fontSize,
+                                    fontWeight: FontWeight.bold)),
+                            Text(
+                                XhStatus.xhstatus.isLogin
+                                    ? XhStatus.xhstatus.userinfo.uid.toString()
+                                    : "",
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.fontSize,
+                                ))
+                          ],
+                        )),
+                  ],
+                ))
+
+            // Column(
+            //   children: [
+            //     const Padding(
+            //         padding: EdgeInsets.only(top: 5),
+            //         child: Text("XhView",
+            //             style: TextStyle(
+            //                 fontSize: 30, fontWeight: FontWeight.bold))),
+            //     Expanded(
+            //         child: Container(
+            //       padding: const EdgeInsets.all(20),
+            //       child: ClipRRect(
+            //         borderRadius: const BorderRadius.all(Radius.circular(40)),
+            //         child: Image.asset("assets/404.png"),
+            //         // child: CachedNetworkImage(
+            //         //   imageUrl: Doghouse.avatarurl,
+            //         //   progressIndicatorBuilder:
+            //         //       (context, url, downloadProgress) =>
+            //         //           CircularProgressIndicator(
+            //         //               value: downloadProgress.progress),
+            //         //   errorWidget: (context, url, error) =>
+            //         //       Image.asset("assets/404.png"),
+            //         // ),
+            //       ),
+            //     ))
+            //   ],
+            // )),
+            ),
         ListTile(
           leading: const Icon(Icons.home),
           title: const Text('Home'),

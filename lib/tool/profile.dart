@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 class UserProfiles {
   static late SharedPreferences prefs;
   static String darkmode = '';
-  static bool isLogin = false;
+  // static bool isLogin = false;
   static String username = '';
   static String password = '';
   static late Directory appDocDir;
@@ -18,12 +18,12 @@ class UserProfiles {
       dark = 'system';
       prefs.setString('darkmode', dark);
     }
-    String? login = prefs.getString('login');
-    if (login == null) {
-      login = 'false';
-      prefs.setString('login', login);
-    }
-    isLogin = login == 'true';
+    // String? login = prefs.getString('login');
+    // if (login == null) {
+    //   login = 'false';
+    //   prefs.setString('login', login);
+    // }
+    // isLogin = login == 'true';
     darkmode = dark;
 
     username = prefs.getString('username') ?? '';
@@ -35,10 +35,10 @@ class UserProfiles {
     darkmode = mode;
   }
 
-  static setLogin(bool login) async {
-    prefs.setString('login', login.toString());
-    isLogin = login;
-  }
+  // static setLogin(bool login) async {
+  //   prefs.setString('login', login.toString());
+  //   isLogin = login;
+  // }
 
   static setUsername(String name) async {
     prefs.setString('username', name);

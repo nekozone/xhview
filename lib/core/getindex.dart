@@ -1,3 +1,5 @@
+import '../core/getuserinfo.dart';
+
 import '../network/connect.dart';
 import 'package:html/parser.dart';
 
@@ -22,7 +24,8 @@ class BbsStatus {
   late List<BigDist> bigdists;
   late String name;
   late bool isLogin = false;
-  init() async {
+  late UserInfo userinfo;
+  init({bool getuserinfo = true}) async {
     info = BbsStatusInfo();
     bigdists = [];
     final resdata = await NetWorkRequest.getHtml(
@@ -37,6 +40,16 @@ class BbsStatus {
     } else {
       isLogin = !(loginElement[0].getElementsByTagName('a')[0].text == "登录");
     }
+    if (isLogin && getuserinfo) {
+      final myinfo = MyInfo();
+      final isok = await myinfo.get();
+      if (isok) {
+        userinfo = myinfo.info;
+      } else {
+        isLogin = false;
+      }
+    }
+
     final nameelement = document.getElementsByClassName("ft");
     if (nameelement.isEmpty) {
       name = "undefined";
