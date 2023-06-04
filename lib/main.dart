@@ -47,7 +47,6 @@ class XhView extends StatelessWidget {
         );
       },
     );
-    ;
   }
 }
 
