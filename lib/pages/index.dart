@@ -1,8 +1,6 @@
-import 'package:XhView/core/threadlist.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import '../tool/profile.dart';
-import 'package:flutter/material.dart';
 import '../widget/chouti.dart';
 import '../tool/status.dart';
 import '../tool/forummodel.dart';

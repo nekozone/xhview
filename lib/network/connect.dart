@@ -21,7 +21,6 @@ class NetWorkRequest {
   static late PersistCookieJar jar;
 
   static init() {
-    print("NetWorkRequest init Start");
     dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
     jar = PersistCookieJar(
       ignoreExpires: true,
@@ -35,6 +34,25 @@ class NetWorkRequest {
   ) async {
     final returndata = ReturnData();
     final res = await dio.get(url, options: options);
+    returndata.data = res.data;
+    returndata.code = res.statusCode!;
+    return returndata;
+  }
+
+  static Future<ReturnData> login(String username, String password) async {
+    final returndata = ReturnData();
+    final res = await dio.post(
+      "https://bbs.dippstar.com/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1",
+      data: {
+        "fastloginfield": "username",
+        "username": username,
+        "cookietime": "2592000",
+        "password": password,
+        "quickforward": "yes",
+        "handlekey": "ls",
+      },
+      options: options,
+    );
     returndata.data = res.data;
     returndata.code = res.statusCode!;
     return returndata;

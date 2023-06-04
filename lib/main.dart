@@ -11,11 +11,9 @@ import 'tool/status.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 按照先后顺序初始化
-  print("init start");
   await UserProfiles.init();
   NetWorkRequest.init();
   await XhStatus.init();
-  print("init ok");
   runApp(const XhView());
 }
 
