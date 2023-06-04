@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:XhView/main.dart';
 import 'package:flutter/material.dart';
+import '../tool/profile.dart';
 
 class Chouti extends StatelessWidget {
   const Chouti({Key? key, this.page = 'home'})
@@ -17,32 +19,38 @@ class Chouti extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Colors.blue,
           ),
-          child: Column(
-            children: [
-              const Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Text("XhView",
-                      style: TextStyle(
-                          fontSize: 30, fontWeight: FontWeight.bold))),
-              Expanded(
-                  child: Container(
-                padding: const EdgeInsets.all(20),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(40)),
-                  child: Image.asset("assets/404.png"),
-                  // child: CachedNetworkImage(
-                  //   imageUrl: Doghouse.avatarurl,
-                  //   progressIndicatorBuilder:
-                  //       (context, url, downloadProgress) =>
-                  //           CircularProgressIndicator(
-                  //               value: downloadProgress.progress),
-                  //   errorWidget: (context, url, error) =>
-                  //       Image.asset("assets/404.png"),
-                  // ),
-                ),
-              ))
-            ],
-          ),
+          child: InkWell(
+              onTap: !UserProfiles.isLogin
+                  ? () {
+                      Navigator.pushNamed(context, '/login');
+                    }
+                  : null,
+              child: Column(
+                children: [
+                  const Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text("XhView",
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold))),
+                  Expanded(
+                      child: Container(
+                    padding: const EdgeInsets.all(20),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
+                      child: Image.asset("assets/404.png"),
+                      // child: CachedNetworkImage(
+                      //   imageUrl: Doghouse.avatarurl,
+                      //   progressIndicatorBuilder:
+                      //       (context, url, downloadProgress) =>
+                      //           CircularProgressIndicator(
+                      //               value: downloadProgress.progress),
+                      //   errorWidget: (context, url, error) =>
+                      //       Image.asset("assets/404.png"),
+                      // ),
+                    ),
+                  ))
+                ],
+              )),
         ),
         ListTile(
           leading: const Icon(Icons.home),

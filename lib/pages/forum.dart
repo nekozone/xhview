@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widget/chouti.dart';
+import '../widget/error.dart';
 import '../core/threadlist.dart';
 import '../tool/forummodel.dart';
 
@@ -71,13 +72,14 @@ class _ForumViewState extends State<ForumView> {
   Widget fbuild(BuildContext context, AsyncSnapshot snapshot) {
     // return const Text("加载失败");
     if (snapshot.connectionState == ConnectionState.done) {
-      print("done");
       if (snapshot.hasError) {
-        return const Text("加载失败了，有错误。(1)");
+        return const ErrorDisplay(
+            "加载失败了，有错误。", "e7ab1c06-13e6-4c77-9583-dc97d41494d4");
       }
       final res = snapshot.data as bool;
       if (!res) {
-        return const Text("加载失败了，有错误。(2)");
+        return const ErrorDisplay(
+            "加载失败了，有错误。", "aac65caa-e11b-4d16-b7df-6df0ca065ace");
       }
       return displayView();
     } else {

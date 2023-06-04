@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import '../tool/profile.dart';
 import '../widget/chouti.dart';
+import '../widget/error.dart';
 import '../tool/status.dart';
 import '../tool/forummodel.dart';
 
@@ -26,7 +27,7 @@ class IndexList extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     if (!XhStatus.isErr) {
-      return const Text("加载失败");
+      return const ErrorDisplay("出问题了", "4ea0125a-0677-424d-95e9-66391131abba");
     }
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 10),

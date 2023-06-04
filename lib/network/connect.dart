@@ -7,7 +7,14 @@ import '../tool/profile.dart';
 Options options = Options(
   headers: {
     "User-Agent":
-        "Mozilla/5.0 (Linux; Android 10; Redmi K30 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.210 Mobile Safari/537.36 XhView",
+        "Mozilla/5.0 (Linux; Android 10; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36  XhView",
+  },
+);
+
+Options pcoptions = Options(
+  headers: {
+    "User-Agent":
+        "Mozilla/5.0 (X11; Linux x86_64; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 XhView",
   },
 );
 
@@ -39,18 +46,29 @@ class NetWorkRequest {
     return returndata;
   }
 
+  static Future<ReturnData> getpcHtml(
+    String url,
+  ) async {
+    final returndata = ReturnData();
+    final res = await dio.get(url, options: pcoptions);
+    returndata.data = res.data;
+    returndata.code = res.statusCode!;
+    return returndata;
+  }
+
   static Future<ReturnData> login(String username, String password) async {
     final returndata = ReturnData();
+    final formdata = FormData.fromMap({
+      "fastloginfield": "username",
+      "username": username,
+      "cookietime": "2592000",
+      "password": password,
+      "quickforward": "yes",
+      "handlekey": "ls",
+    });
     final res = await dio.post(
       "https://bbs.dippstar.com/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1",
-      data: {
-        "fastloginfield": "username",
-        "username": username,
-        "cookietime": "2592000",
-        "password": password,
-        "quickforward": "yes",
-        "handlekey": "ls",
-      },
+      data: formdata,
       options: options,
     );
     returndata.data = res.data;
