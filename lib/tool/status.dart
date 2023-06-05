@@ -1,5 +1,4 @@
 import '../core/getindex.dart';
-import '../core/getuserinfo.dart';
 
 class XhStatus {
   static late BbsStatus xhstatus;
