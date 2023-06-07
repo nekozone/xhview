@@ -3,6 +3,7 @@ import '../widget/chouti.dart';
 import '../widget/error.dart';
 import '../core/threadlist.dart';
 import '../tool/forummodel.dart';
+import '../tool/threadmodel.dart';
 
 class Forum extends StatelessWidget {
   const Forum({super.key});
@@ -96,17 +97,12 @@ class _ForumViewState extends State<ForumView> {
         // shrinkWrap: true,
         // physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          if (index == threadlist.length - 1) {
+          if (index == threadlist.length - 1 && index != 0) {
             if (nowPage < maxpage) {
               getpage(page: nowPage + 1);
               return Container(
                 padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
-                // alignment: Alignment.center,
-                child: const SizedBox(
-                  width: 24.0,
-                  height: 24.0,
-                  child: CircularProgressIndicator(strokeWidth: 2.0),
-                ),
+                child: const Center(child: CircularProgressIndicator()),
               );
             } else {
               return Container(
@@ -120,23 +116,31 @@ class _ForumViewState extends State<ForumView> {
             }
           } else {
             final item = threadlist[index];
-            return ListTile(
-              title: Text(item.title),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(item.author),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.chat,
-                        size: Theme.of(context).textTheme.bodyMedium?.fontSize,
-                        // color: Theme.of(context).primaryColorDark,
-                      ),
-                      Text(item.replynum.toString())
-                    ],
-                  )
-                ],
+
+            return InkWell(
+              onTap: () {
+                final args = ThreadArgs(threads.title, item.tid);
+                Navigator.pushNamed(context, '/thread', arguments: args);
+              },
+              child: ListTile(
+                title: Text(item.title),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(item.author),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.chat,
+                          size:
+                              Theme.of(context).textTheme.bodyMedium?.fontSize,
+                          // color: Theme.of(context).primaryColorDark,
+                        ),
+                        Text(item.replynum.toString())
+                      ],
+                    )
+                  ],
+                ),
               ),
             );
           }

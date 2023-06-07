@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/thread.dart';
 import '../tool/threadmodel.dart';
 import '../widget/error.dart';
+import '../widget/notehead.dart';
 
 class Thread extends StatefulWidget {
   const Thread({super.key});
@@ -18,12 +19,14 @@ class _ThreadState extends State<Thread> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    args = ModalRoute.of(context)!.settings.arguments as ThreadArgs;
-    pagetitle = args.title;
   }
 
   @override
   Widget build(BuildContext context) {
+    args = ModalRoute.of(context)!.settings.arguments as ThreadArgs;
+    setState(() {
+      pagetitle = args.title;
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(pagetitle),
@@ -113,5 +116,53 @@ class _ThreadViewState extends State<ThreadView> {
     } else {
       return const Center(child: CircularProgressIndicator());
     }
+  }
+
+  Widget displayView() {
+    return ListView.separated(
+      separatorBuilder: (context, index) => const Divider(
+        height: 0,
+      ),
+      itemCount: nowItem,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        if (index == postlist.length - 1 && index != 0) {
+          if (nowPage < maxpage) {
+            getpage(page: nowPage + 1);
+            return Container(
+              padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
+              child: const Center(child: CircularProgressIndicator()),
+            );
+          } else {
+            return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "没有更多了",
+                style: TextStyle(color: Theme.of(context).disabledColor),
+              ),
+            );
+          }
+        } else {
+          final item = postlist[index];
+          return Column(
+            children: [
+              NoteHead(
+                  username: item.author,
+                  avatar: item.avatar,
+                  time: item.time,
+                  lou: item.lou,
+                  pid: item.pid,
+                  uid: item.uid),
+              const Divider(),
+              SelectableText(
+                item.html.text,
+                textAlign: TextAlign.start,
+              )
+            ],
+          );
+        }
+      },
+    );
   }
 }

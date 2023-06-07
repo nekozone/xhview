@@ -6,6 +6,7 @@ import 'pages/settings.dart';
 import 'pages/index.dart';
 import 'pages/forum.dart';
 import 'pages/login.dart';
+import 'pages/thread.dart';
 import 'tool/profile.dart';
 import 'tool/status.dart';
 
@@ -41,6 +42,7 @@ class XhView extends StatelessWidget {
             '/settings': (context) => const SettingsPage(),
             '/forum': (context) => const Forum(),
             '/login': (context) => const Login(),
+            '/thread': (context) => const Thread(),
 
             // '/about': (context) => const Dogabout(),
             // '/add': ((context) => const Addpage()),

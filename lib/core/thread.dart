@@ -13,7 +13,7 @@ class PostItem {
   late int pid;
   late int uid;
   late int lou;
-  late DateTime time;
+  late String time;
   late Element html;
 }
 
@@ -162,10 +162,10 @@ class Posts {
         }
       }
       final timestr = relaele[0].text.replaceAll("\n", "").trim();
-      print("****${timestr}****");
-      final ptime = DateFormat('yyy-MM-dd HH:mm:ss').parse(timestr);
+      // print("****${timestr}****");
+      // final ptime = DateFormat('yyy-MM-dd HH:mm:ss').parse(timestr);
 
-      item.time = ptime;
+      item.time = timestr;
 
       // 获取帖子内容
       item.html = msgele[0];
