@@ -109,7 +109,7 @@ class NoteBody extends StatelessWidget {
               width: 0.5,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(6))),
-        child: Text("Q: ${item.quotesrc} (${item.quoteid})\n${item.text}"),
+        child: Text("引用: ${item.quotesrc} (${item.quoteid})\n${item.text}"),
       ));
       chdstr.add(quotespin);
     } else {

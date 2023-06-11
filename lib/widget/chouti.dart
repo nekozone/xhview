@@ -57,7 +57,7 @@ class Chouti extends StatelessWidget {
                             Text(
                                 XhStatus.xhstatus.isLogin
                                     ? XhStatus.xhstatus.userinfo.username
-                                    : '未登录',
+                                    : '游客',
                                 style: TextStyle(
                                     fontSize: Theme.of(context)
                                         .textTheme
