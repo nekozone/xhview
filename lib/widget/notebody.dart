@@ -61,9 +61,12 @@ class NoteBody extends StatelessWidget {
           width: imgwidth,
           height: imgheight,
           fit: BoxFit.cover,
-          progressIndicatorBuilder: (context, url, progress) => Center(
-            child: CircularProgressIndicator(
-              value: progress.progress,
+          progressIndicatorBuilder: (context, url, progress) => Container(
+            padding: const EdgeInsets.all(10),
+            child: Center(
+              child: CircularProgressIndicator(
+                value: progress.progress,
+              ),
             ),
           ),
           errorWidget: (context, url, error) => Image.asset("assets/404.png"),
@@ -140,7 +143,8 @@ class NoteBody extends StatelessWidget {
     } catch (e) {
       size = 0;
     }
-    if (style.color == null) {
+    if (style.color == null ||
+        Theme.of(context).brightness == Brightness.dark) {
       return TextStyle(
         fontWeight: style.bold! ? FontWeight.bold : FontWeight.normal,
         fontSize: DefaultTextStyle.of(context).style.fontSize! + size,

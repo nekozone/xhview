@@ -19,10 +19,10 @@ Future<bool> bbslogin(String username, String password) async {
     return false;
   }
   final info = myinfo.info;
+  await XhStatus.init(getuserinfo: false);
   XhStatus.xhstatus.userinfo = info;
   // XhStatus.xhstatus.isLogin = true;
   UserProfiles.setUsername(username);
   UserProfiles.setPassword(md5str);
-  await XhStatus.init(getuserinfo: false);
   return true;
 }

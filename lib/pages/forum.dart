@@ -61,6 +61,9 @@ class _ForumViewState extends State<ForumView> {
       nowPage = page;
       maxpage = threads.maxpage;
       nowItem = threadlist.length;
+      if (nowPage == maxpage) {
+        nowItem += 1;
+      }
     });
     return res;
   }
@@ -97,14 +100,15 @@ class _ForumViewState extends State<ForumView> {
         // shrinkWrap: true,
         // physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          if (index == threadlist.length - 1 && index != 0) {
+          if (index >= threadlist.length - 1) {
             if (nowPage < maxpage) {
               getpage(page: nowPage + 1);
               return Container(
                 padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
                 child: const Center(child: CircularProgressIndicator()),
               );
-            } else {
+            }
+            if (index >= threadlist.length && nowPage == maxpage) {
               return Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(16.0),

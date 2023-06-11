@@ -26,7 +26,7 @@ class NoteHead extends StatelessWidget {
         // print("点击了头像");
       },
       child: SizedBox(
-        height: 80,
+        height: 60,
         child: Stack(
           children: [
             Positioned(
@@ -34,8 +34,8 @@ class NoteHead extends StatelessWidget {
               left: 10,
               child: CachedNetworkImage(
                 imageUrl: avatar,
-                width: 64,
-                height: 64,
+                width: 40,
+                height: 40,
                 fit: BoxFit.cover,
                 progressIndicatorBuilder: (context, url, progress) => Center(
                   child: CircularProgressIndicator(
@@ -43,42 +43,45 @@ class NoteHead extends StatelessWidget {
                   ),
                 ),
                 errorWidget: (context, url, error) =>
-                    Image.asset("assets/404.png"),
+                    Image.asset("assets/noavatar_big.gif"),
               ),
             ),
             Positioned(
               top: 10,
-              left: 90,
+              left: 60,
               child: Text(
                 username,
                 style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).primaryColorDark,
+                    fontSize: 16,
+                    color: (Theme.of(context).brightness == Brightness.light)
+                        ? Theme.of(context).primaryColorDark
+                        : Theme.of(context).primaryColorLight,
                     fontWeight: FontWeight.bold),
               ),
             ),
             Positioned(
-                top: 40,
-                left: 90,
+                top: 36,
+                left: 60,
                 height: 20,
                 child: Text(time.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
-                      color: Theme.of(context).primaryColorDark,
                     ))),
             Positioned(
               top: 10,
               right: 10,
               child: Text("$lou楼",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
-                    color: Theme.of(context).primaryColorDark,
                   )),
             ),
             Positioned(
-              bottom: 10,
+              top: 36,
               right: 10,
-              child: Text("#${pid}"),
+              child: Text("#$pid",
+                  style: const TextStyle(
+                    fontSize: 12,
+                  )),
             )
           ],
         ),

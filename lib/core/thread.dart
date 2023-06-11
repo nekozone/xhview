@@ -167,6 +167,13 @@ class Posts {
 
       item.time = timestr;
 
+      // 添加在手机端上传的图片
+
+      final mpicele = plcitem.getElementsByClassName("img_one");
+      if (mpicele.isNotEmpty) {
+        msgele[0].children.add(mpicele[0]);
+      }
+
       // 获取帖子内容
       item.html = msgele[0];
       postlist.add(item);

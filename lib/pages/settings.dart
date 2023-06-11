@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../tool/profile.dart';
 import '../widget/chouti.dart';
-import '../widget/cookiesview.dart';
+// import '../widget/cookiesview.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -108,7 +108,7 @@ class _SetListState extends State<SetList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(children: [dkSet(), const CookiesView()]),
+      child: Column(children: [dkSet()]),
     );
   }
 }

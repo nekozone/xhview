@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart' as parser;
 import '../core/thread.dart';
 import '../tool/threadmodel.dart';
 import '../widget/error.dart';
@@ -150,6 +151,12 @@ class _ThreadViewState extends State<ThreadView> {
           );
         } else {
           final item = postlist[index];
+          var rawHtmlStr = item.html.outerHtml;
+          rawHtmlStr = rawHtmlStr.replaceAll("</p>", "</p><br>");
+          rawHtmlStr = rawHtmlStr.replaceAll("<br>", "\n");
+          rawHtmlStr = rawHtmlStr.replaceAll("<br/>", "\n");
+          rawHtmlStr = rawHtmlStr.replaceAll("<br />", "\n");
+          final phtml = parser.parse(rawHtmlStr);
           return Column(
             children: [
               NoteHead(
@@ -160,7 +167,7 @@ class _ThreadViewState extends State<ThreadView> {
                   pid: item.pid,
                   uid: item.uid),
               const Divider(),
-              NoteBody(ele: item.html),
+              NoteBody(ele: phtml),
             ],
           );
         }

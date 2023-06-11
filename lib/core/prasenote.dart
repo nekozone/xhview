@@ -14,7 +14,12 @@ Contitem? phl(dom.Node ele) {
       resitem.linkurl = ele.attributes['href'];
     } else if (ele.localName == 'img') {
       resitem = Contitem('img');
-      resitem.imgurl = ele.attributes['src'];
+      final picurl = Uri.parse(ele.attributes['src']!);
+      if (picurl.isAbsolute) {
+        resitem.imgurl = ele.attributes['src'];
+      } else {
+        resitem.imgurl = 'https://bbs.dippstar.com/$picurl';
+      }
       resitem.imgwidth = double.tryParse(ele.attributes['width'] ?? '');
       resitem.imgheight = double.tryParse(ele.attributes['height'] ?? '');
     } else if (ele.localName == "div") {
