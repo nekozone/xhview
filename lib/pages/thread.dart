@@ -3,6 +3,7 @@ import '../core/thread.dart';
 import '../tool/threadmodel.dart';
 import '../widget/error.dart';
 import '../widget/notehead.dart';
+import '../widget/notebody.dart';
 
 class Thread extends StatefulWidget {
   const Thread({super.key});
@@ -123,10 +124,10 @@ class _ThreadViewState extends State<ThreadView> {
       separatorBuilder: (context, index) => const Divider(
         height: 0,
       ),
-      itemCount: nowItem,
+      itemCount: nowItem + 1,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        if (index == postlist.length - 1 && index != 0) {
+        if (index >= postlist.length - 1 && index != 0) {
           if (nowPage < maxpage) {
             getpage(page: nowPage + 1);
             return Container(
@@ -155,10 +156,7 @@ class _ThreadViewState extends State<ThreadView> {
                   pid: item.pid,
                   uid: item.uid),
               const Divider(),
-              SelectableText(
-                item.html.text,
-                textAlign: TextAlign.start,
-              )
+              NoteBody(ele: item.html),
             ],
           );
         }
