@@ -28,6 +28,7 @@ class ForumView extends StatefulWidget {
 
 class _ForumViewState extends State<ForumView> {
   late Threads threads;
+  bool isloading = false;
   final List<ThreadItem> threadlist = [];
   final List<int> threadIdList = [];
   late dynamic _firstpage;
@@ -48,6 +49,7 @@ class _ForumViewState extends State<ForumView> {
   }
 
   getpage({int page = 1}) async {
+    isloading = true;
     bool res = await threads.getList(ppage: page);
     final list = threads.threadlist;
     setState(() {
@@ -65,6 +67,7 @@ class _ForumViewState extends State<ForumView> {
         nowItem += 1;
       }
     });
+    isloading = false;
     return res;
   }
 
@@ -92,63 +95,83 @@ class _ForumViewState extends State<ForumView> {
   }
 
   Widget displayView() {
-    return ListView.separated(
-        padding: const EdgeInsets.only(top: 0),
-        separatorBuilder: (context, index) => const Divider(height: .0),
-        itemCount: nowItem,
-        shrinkWrap: true,
-        // shrinkWrap: true,
-        // physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          if (index >= threadlist.length - 1) {
-            if (nowPage < maxpage) {
-              getpage(page: nowPage + 1);
-              return Container(
-                padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
-                child: const Center(child: CircularProgressIndicator()),
-              );
-            }
-            if (index >= threadlist.length && nowPage == maxpage) {
-              return Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "没有更多了",
-                  style: TextStyle(color: Theme.of(context).disabledColor),
-                ),
-              );
-            }
-          } else {
-            final item = threadlist[index];
+    return RefreshIndicator(
+        onRefresh: onRefresh,
+        child: ListView.separated(
+            padding: const EdgeInsets.only(top: 0),
+            separatorBuilder: (context, index) => const Divider(height: .0),
+            itemCount: nowItem,
+            shrinkWrap: true,
+            // shrinkWrap: true,
+            // physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              if (index >= threadlist.length - 1) {
+                if (nowPage < maxpage) {
+                  getpage(page: nowPage + 1);
+                  return Container(
+                    padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
+                    child: const Center(child: CircularProgressIndicator()),
+                  );
+                }
+                if (index >= threadlist.length && nowPage == maxpage) {
+                  return Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "没有更多了",
+                      style: TextStyle(color: Theme.of(context).disabledColor),
+                    ),
+                  );
+                }
+              } else {
+                final item = threadlist[index];
 
-            return InkWell(
-              onTap: () {
-                final args = ThreadArgs(threads.title, item.tid);
-                Navigator.pushNamed(context, '/thread', arguments: args);
-              },
-              child: ListTile(
-                title: Text(item.title),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(item.author),
-                    Row(
+                return InkWell(
+                  onTap: () {
+                    final args = ThreadArgs(threads.title, item.tid);
+                    Navigator.pushNamed(context, '/thread', arguments: args);
+                  },
+                  child: ListTile(
+                    title: Text(item.title),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.chat,
-                          size:
-                              Theme.of(context).textTheme.bodyMedium?.fontSize,
-                          // color: Theme.of(context).primaryColorDark,
-                        ),
-                        Text(item.replynum.toString())
+                        Text(item.author),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.chat,
+                              size: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.fontSize,
+                              // color: Theme.of(context).primaryColorDark,
+                            ),
+                            Text(item.replynum.toString())
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
-              ),
-            );
-          }
-          // return ListTile(title: Text("$index"));
-        });
+                    ),
+                  ),
+                );
+              }
+              // return ListTile(title: Text("$index"));
+            }));
+  }
+
+  Future onRefresh() async {
+    if (isloading) {
+      await Future.delayed(const Duration(seconds: 3));
+      return;
+    }
+    threadlist.clear();
+    threadIdList.clear();
+    await getpage();
+    isloading = true;
+    Future.delayed(const Duration(seconds: 20)).then((value) {
+      isloading = false;
+    });
+    return;
+    // print("EndRefresh");
   }
 }

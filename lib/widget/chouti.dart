@@ -108,7 +108,7 @@ class Chouti extends StatelessWidget {
             ),
         ListTile(
           leading: const Icon(Icons.home),
-          title: const Text('Home'),
+          title: const Text('首页'),
           onTap: () {
             Navigator.pop(context);
             if (page != 'home') {
@@ -118,42 +118,39 @@ class Chouti extends StatelessWidget {
             // Navigator.pop(context);
           },
         ),
-        ListTile(
-            leading: const Icon(Icons.add),
-            title: const Text('Post'),
-            onTap: () {
-              Navigator.pop(context);
-              if (page != 'add') {
-                Navigator.pushNamed(context, '/add');
-              }
-            }
-            // Navigator.pushNamed(context, '/add');
-            // Navigator.pop(context);
-            ),
+        // ListTile(
+        //     leading: const Icon(Icons.add),
+        //     title: const Text('Post'),
+        //     onTap: () {
+        //       Navigator.pop(context);
+        //       if (page != 'add') {
+        //         Navigator.pushNamed(context, '/add');
+        //       }
+        //     }
+        //     // Navigator.pushNamed(context, '/add');
+        //     // Navigator.pop(context);
+        //     ),
         ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            title: const Text('设置'),
             onTap: () {
               Navigator.pop(context);
               if (page != 'settings') {
                 Navigator.pushNamed(context, '/settings');
               }
-            }
-            // Navigator.pushNamed(context, '/add');
-            // Navigator.pop(context);
-            ),
-        ListTile(
-          leading: const Icon(Icons.info),
-          title: const Text('About'),
-          onTap: () {
-            Navigator.pop(context);
-            if (page != 'about') {
-              Navigator.pushNamed(context, '/about');
-            }
-            // Navigator.pushNamed(context, '/about');
-            // Navigator.pop(context);
-          },
-        ),
+            }),
+        // ListTile(
+        //   leading: const Icon(Icons.info),
+        //   title: const Text('About'),
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //     if (page != 'about') {
+        //       Navigator.pushNamed(context, '/about');
+        //     }
+        //     // Navigator.pushNamed(context, '/about');
+        //     // Navigator.pop(context);
+        //   },
+        // ),
         ListTile(
           leading: const Icon(Icons.exit_to_app),
           title: const Text('退出'),

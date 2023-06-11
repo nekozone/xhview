@@ -62,6 +62,7 @@ class ThreadView extends StatefulWidget {
 }
 
 class _ThreadViewState extends State<ThreadView> {
+  bool isloading = false;
   late Posts posts;
   final List<PostItem> postlist = [];
   late dynamic _firstpage;
@@ -77,6 +78,7 @@ class _ThreadViewState extends State<ThreadView> {
   }
 
   Future<bool> getpage({int page = 1}) async {
+    isloading = true;
     bool res = await posts.getList(ppage: page);
     final list = posts.postlist;
     setState(() {
@@ -90,6 +92,7 @@ class _ThreadViewState extends State<ThreadView> {
         nowItem += 1;
       }
     });
+    isloading = false;
     return res;
   }
 
@@ -124,54 +127,71 @@ class _ThreadViewState extends State<ThreadView> {
   }
 
   Widget displayView() {
-    return ListView.separated(
-      separatorBuilder: (context, index) => const Divider(
-        height: 0,
-      ),
-      itemCount: nowItem,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        if (index >= postlist.length - 1) {
-          if (nowPage < maxpage) {
-            getpage(page: nowPage + 1);
-            return Container(
-              padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
-              child: const Center(child: CircularProgressIndicator()),
-            );
-          }
-        }
-        if (index >= postlist.length && nowPage == maxpage) {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "没有更多了",
-              style: TextStyle(color: Theme.of(context).disabledColor),
-            ),
-          );
-        } else {
-          final item = postlist[index];
-          var rawHtmlStr = item.html.outerHtml;
-          rawHtmlStr = rawHtmlStr.replaceAll("</p>", "</p><br>");
-          rawHtmlStr = rawHtmlStr.replaceAll("<br>", "\n");
-          rawHtmlStr = rawHtmlStr.replaceAll("<br/>", "\n");
-          rawHtmlStr = rawHtmlStr.replaceAll("<br />", "\n");
-          final phtml = parser.parse(rawHtmlStr);
-          return Column(
-            children: [
-              NoteHead(
-                  username: item.author,
-                  avatar: item.avatar,
-                  time: item.time,
-                  lou: item.lou,
-                  pid: item.pid,
-                  uid: item.uid),
-              const Divider(),
-              NoteBody(ele: phtml),
-            ],
-          );
-        }
-      },
-    );
+    return RefreshIndicator(
+        onRefresh: onRefresh,
+        child: ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 0,
+          ),
+          itemCount: nowItem,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            if (index >= postlist.length - 1) {
+              if (nowPage < maxpage) {
+                getpage(page: nowPage + 1);
+                return Container(
+                  padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
+            }
+            if (index >= postlist.length && nowPage == maxpage) {
+              return Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "没有更多了",
+                  style: TextStyle(color: Theme.of(context).disabledColor),
+                ),
+              );
+            } else {
+              final item = postlist[index];
+              var rawHtmlStr = item.html.outerHtml;
+              rawHtmlStr = rawHtmlStr.replaceAll("</p>", "</p><br>");
+              rawHtmlStr = rawHtmlStr.replaceAll("<br>", "\n");
+              rawHtmlStr = rawHtmlStr.replaceAll("<br/>", "\n");
+              rawHtmlStr = rawHtmlStr.replaceAll("<br />", "\n");
+              final phtml = parser.parse(rawHtmlStr);
+              return Column(
+                children: [
+                  NoteHead(
+                      username: item.author,
+                      avatar: item.avatar,
+                      time: item.time,
+                      lou: item.lou,
+                      pid: item.pid,
+                      uid: item.uid),
+                  const Divider(),
+                  NoteBody(ele: phtml),
+                ],
+              );
+            }
+          },
+        ));
+  }
+
+  Future onRefresh() async {
+    if (isloading) {
+      await Future.delayed(const Duration(seconds: 3));
+      return;
+    }
+    postlist.clear();
+    await getpage();
+    isloading = true;
+    Future.delayed(const Duration(seconds: 20)).then((value) {
+      isloading = false;
+    });
+    return;
+    // print("EndRefresh");
   }
 }
