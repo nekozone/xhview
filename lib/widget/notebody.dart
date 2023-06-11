@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import '../core/prasenote.dart';
@@ -15,10 +13,15 @@ class NoteBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final rescont = phl(ele);
     final spinlist = rphl(context, rescont!, null, null);
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-        children: spinlist,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(60, 2, 0, 2),
+      constraints: const BoxConstraints(minWidth: double.infinity),
+      child: RichText(
+        textAlign: TextAlign.start,
+        text: TextSpan(
+          style: Theme.of(context).textTheme.bodyMedium,
+          children: spinlist,
+        ),
       ),
     );
   }
@@ -131,11 +134,21 @@ class NoteBody extends StatelessWidget {
   }
 
   TextStyle genstyle(ItemStyle style, BuildContext context) {
+    late double size;
+    try {
+      size = double.parse(style.size!);
+    } catch (e) {
+      size = 0;
+    }
+    if (style.color == null) {
+      return TextStyle(
+        fontWeight: style.bold! ? FontWeight.bold : FontWeight.normal,
+        fontSize: DefaultTextStyle.of(context).style.fontSize! + size,
+      );
+    }
     return TextStyle(
-      fontWeight: style.bold! ? FontWeight.bold : FontWeight.normal,
-      fontSize: DefaultTextStyle.of(context).style.fontSize! +
-          double.parse(style.size!),
-      color: style.color != null ? colorFromHex(style.color!) : null,
-    );
+        fontWeight: style.bold! ? FontWeight.bold : FontWeight.normal,
+        fontSize: DefaultTextStyle.of(context).style.fontSize! + size,
+        color: colorFromHex(style.color!));
   }
 }

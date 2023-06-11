@@ -85,6 +85,9 @@ class _ThreadViewState extends State<ThreadView> {
       nowPage = page;
       maxpage = posts.maxpage;
       nowItem = postlist.length;
+      if (nowPage == maxpage) {
+        nowItem += 1;
+      }
     });
     return res;
   }
@@ -124,26 +127,27 @@ class _ThreadViewState extends State<ThreadView> {
       separatorBuilder: (context, index) => const Divider(
         height: 0,
       ),
-      itemCount: nowItem + 1,
+      itemCount: nowItem,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        if (index >= postlist.length - 1 && index != 0) {
+        if (index >= postlist.length - 1) {
           if (nowPage < maxpage) {
             getpage(page: nowPage + 1);
             return Container(
               padding: const EdgeInsets.fromLTRB(30, 3, 30, 3),
               child: const Center(child: CircularProgressIndicator()),
             );
-          } else {
-            return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "没有更多了",
-                style: TextStyle(color: Theme.of(context).disabledColor),
-              ),
-            );
           }
+        }
+        if (index >= postlist.length && nowPage == maxpage) {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "没有更多了",
+              style: TextStyle(color: Theme.of(context).disabledColor),
+            ),
+          );
         } else {
           final item = postlist[index];
           return Column(
