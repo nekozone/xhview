@@ -4,6 +4,8 @@ import '../core/prasenote.dart';
 import '../tool/notemodel.dart';
 import '../tool/pcolor.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NoteBody extends StatelessWidget {
   final dom.Node ele;
@@ -14,7 +16,7 @@ class NoteBody extends StatelessWidget {
     final rescont = phl(ele);
     final spinlist = rphl(context, rescont!, null, null);
     return Container(
-      padding: const EdgeInsets.fromLTRB(60, 2, 0, 2),
+      padding: const EdgeInsets.fromLTRB(60, 2, 10, 2),
       constraints: const BoxConstraints(minWidth: double.infinity),
       child: RichText(
         textAlign: TextAlign.start,
@@ -30,8 +32,11 @@ class NoteBody extends StatelessWidget {
       ItemStyle? parentstyle, String? linksrc) {
     List<InlineSpan> chdstr = [];
     if (item.type == "Text") {
-      final linkstr = linksrc != null ? "link:$linksrc" : "";
       late TextSpan textspan;
+      bool xlink = false;
+      if (linksrc != null && linksrc != "") {
+        xlink = true;
+      }
       if (parentstyle != null || item.textstyle != null) {
         final style = ItemStyle();
         style.bold = item.textstyle?.bold ?? parentstyle?.bold ?? false;
@@ -39,9 +44,33 @@ class NoteBody extends StatelessWidget {
         style.color = item.textstyle?.color ?? parentstyle?.color ?? "";
         textspan = TextSpan(
             text: item.text?.replaceAll("\n\n", '\n'),
-            style: genstyle(style, context));
+            style: genstyle(style, context, islink: xlink),
+            recognizer: xlink
+                ? (TapGestureRecognizer()
+                  ..onTap = () async {
+                    final Uri url = Uri.parse(linksrc!);
+                    if (!await launchUrl(url,
+                        mode: LaunchMode.externalApplication)) {
+                      throw 'Could not launch $url';
+                    }
+                  })
+                : null);
       } else {
-        textspan = TextSpan(text: item.text?.replaceAll("\n\n", '\n'));
+        textspan = TextSpan(
+            text: item.text?.replaceAll("\n\n", '\n'),
+            style: xlink
+                ? const TextStyle(decoration: TextDecoration.underline)
+                : null,
+            recognizer: xlink
+                ? (TapGestureRecognizer()
+                  ..onTap = () async {
+                    final Uri url0 = Uri.parse(linksrc!);
+                    if (!await launchUrl(url0,
+                        mode: LaunchMode.externalApplication)) {
+                      throw 'Could not launch $url0';
+                    }
+                  })
+                : null);
       }
       chdstr.add(textspan);
     } else if (item.type == 'a') {
@@ -136,7 +165,8 @@ class NoteBody extends StatelessWidget {
     return chdstr;
   }
 
-  TextStyle genstyle(ItemStyle style, BuildContext context) {
+  TextStyle genstyle(ItemStyle style, BuildContext context,
+      {bool? islink = false}) {
     late double size;
     try {
       size = double.parse(style.size!);
@@ -147,12 +177,15 @@ class NoteBody extends StatelessWidget {
         Theme.of(context).brightness == Brightness.dark) {
       return TextStyle(
         fontWeight: style.bold! ? FontWeight.bold : FontWeight.normal,
-        fontSize: DefaultTextStyle.of(context).style.fontSize! + size,
+        fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize! + size,
+        decoration: islink! ? TextDecoration.underline : null,
       );
     }
     return TextStyle(
-        fontWeight: style.bold! ? FontWeight.bold : FontWeight.normal,
-        fontSize: DefaultTextStyle.of(context).style.fontSize! + size,
-        color: colorFromHex(style.color!));
+      fontWeight: style.bold! ? FontWeight.bold : FontWeight.normal,
+      fontSize: Theme.of(context).textTheme.bodyMedium!.fontSize! + size,
+      color: colorFromHex(style.color!),
+      decoration: islink! ? TextDecoration.underline : null,
+    );
   }
 }

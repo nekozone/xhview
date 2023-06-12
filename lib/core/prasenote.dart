@@ -11,7 +11,12 @@ Contitem? phl(dom.Node ele) {
     // print("localname:${ele.localName} haschile:${ele.hasChildNodes()}");
     if (ele.localName == 'a') {
       resitem = Contitem('a');
-      resitem.linkurl = ele.attributes['href'];
+      final alink = Uri.parse(ele.attributes['href']!);
+      if (alink.isAbsolute) {
+        resitem.linkurl = ele.attributes['href'];
+      } else {
+        resitem.linkurl = 'https://bbs.dippstar.com/$alink';
+      }
     } else if (ele.localName == 'img') {
       resitem = Contitem('img');
       final picurl = Uri.parse(ele.attributes['src']!);
@@ -64,6 +69,13 @@ Contitem? phl(dom.Node ele) {
         nstyle.color = color;
       }
       resitem.textstyle = nstyle;
+    } else if (ele.localName == "iframe") {
+      resitem = Contitem('a');
+      resitem.linkurl = ele.attributes['src'];
+      final childitem = Contitem('Text');
+      childitem.text = ele.attributes['src'];
+      resitem.children = [childitem];
+      return resitem;
     } else {
       resitem = Contitem('u-${ele.localName}');
     }
