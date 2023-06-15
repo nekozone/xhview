@@ -67,6 +67,11 @@ class Posts {
     if (h2ele.isEmpty) {
       return false;
     }
+    final haele = h2ele[0].getElementsByTagName('a');
+    if (haele.isNotEmpty) {
+      haele[0].remove();
+    }
+
     title = h2ele[0].text;
 
     // 获取最大页数
