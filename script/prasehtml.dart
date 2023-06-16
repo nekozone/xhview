@@ -22,30 +22,6 @@ class ItemStyle {
   bool? bold;
 }
 
-String rawHtml = '''
-<div class="message">
-淮海决战前国军军头们莫非都这么二？一点局势都看不清？<br>
-<br>
-<a href="forum.php?mod=viewthread&amp;tid=975345&amp;aid=1017822&amp;from=album&amp;page=1&amp;mobile=2" class="orange"><img id="aimg_1017822" src="https://bbs.dippstar.com/data/attachment/forum/202306/08/172957ccai0z95ijip7s76.jpeg" alt="6080080A-3C74-4043-A9E3-3AA5B80164AB.jpeg" title="6080080A-3C74-4043-A9E3-3AA5B80164AB.jpeg" zsrc="https://bbs.dippstar.com/data/attachment/forum/202306/08/172957ccai0z95ijip7s76.jpeg" style="display: inline; visibility: visible;"></a>
-<br>
-</div>''';
-String rawHtml2 = '''<div class="message">
-                	                                        
-                    	                        
-                                                                                                            以下本子都是我体验过的，都绝对适合本坛好汉刀鞘，孤城，我和我的战争，金陵有个东君书院，兵临城下，粟米苍生（这个本<strong><font color="#ff0000">只适合在天津</font></strong>玩）。<br>
-<br>
-                                                    </div>''';
-
-String rawHtml3 = '''<div class="message">
-                	                                        
-                    	                        
-                                                                            <div class="grey quote"><blockquote>引用: <font size="2"><a href="https://bbs.dippstar.com/forum.php?mod=redirect&amp;goto=findpost&amp;pid=16929640&amp;ptid=934370" target="_blank"><font color="#999999">H魔人 发表于 2021-11-22 14:59</font></a></font><br>
-千佛梦也不错</blockquote></div><br>
-千佛梦占的是立意的便宜，其实剧本本身很一般。<br>
-<br>
-不过我那一局，我装了一个B，我说我在德国先留学的，是共产国际的……最后全体跟我投票保护文物，原地入党~哈哈哈哈哈哈哈哈哈哈哈哈哈。<br>
-                        </div>''';
-
 Contitem? phl(dom.Node ele) {
   late Contitem resitem;
   if (ele is dom.Text) {
