@@ -1,11 +1,11 @@
-import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
+// import 'package:dio/dio.dart';
+// import 'package:intl/intl.dart';
+// import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import '../network/connect.dart';
 
-final dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
+// final dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
 
 class PostItem {
   late String author;

@@ -5,6 +5,7 @@ import '../tool/threadmodel.dart';
 import '../widget/error.dart';
 import '../widget/notehead.dart';
 import '../widget/notebody.dart';
+import '../widget/notefoot.dart';
 
 class Thread extends StatefulWidget {
   const Thread({super.key});
@@ -191,6 +192,7 @@ class _ThreadViewState extends State<ThreadView> {
                         uid: item.uid),
                     const Divider(),
                     NoteBody(ele: phtml),
+                    const NoteFoot()
                   ],
                 );
               }
@@ -205,6 +207,7 @@ class _ThreadViewState extends State<ThreadView> {
                       uid: item.uid),
                   const Divider(),
                   NoteBody(ele: phtml),
+                  const NoteFoot()
                 ],
               );
             }

@@ -98,7 +98,7 @@ class NoteBody extends StatelessWidget {
               ),
             ),
           ),
-          errorWidget: (context, url, error) => Image.asset("assets/404.png"),
+          errorWidget: (context, url, error) => Image.asset("assets/404.svg"),
         ));
         chdstr.add(imgspan);
       } else {
@@ -111,7 +111,7 @@ class NoteBody extends StatelessWidget {
               value: progress.progress,
             ),
           ),
-          errorWidget: (context, url, error) => Image.asset("assets/404.png"),
+          errorWidget: (context, url, error) => Image.asset("assets/404.svg"),
         ));
         chdstr.add(imgspan);
       }
