@@ -1,11 +1,11 @@
-import 'package:dio/dio.dart';
-import 'package:intl/intl.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
+// import 'package:dio/dio.dart';
+// import 'package:intl/intl.dart';
+// import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import '../network/connect.dart';
 
-final dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
+// final dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
 
 class PostItem {
   late String author;
@@ -67,6 +67,11 @@ class Posts {
     if (h2ele.isEmpty) {
       return false;
     }
+    final haele = h2ele[0].getElementsByTagName('a');
+    if (haele.isNotEmpty) {
+      haele[0].remove();
+    }
+
     title = h2ele[0].text;
 
     // 获取最大页数

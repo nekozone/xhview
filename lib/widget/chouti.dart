@@ -41,10 +41,10 @@ class Chouti extends StatelessWidget {
                                         CircularProgressIndicator(
                                             value: downloadProgress.progress),
                                 errorWidget: (context, url, error) =>
-                                    Image.asset("assets/404.png"),
+                                    Image.asset("assets/noavatar_big.gif"),
                               )
                             : Image.asset(
-                                "assets/404.png",
+                                "assets/noavatar_big.gif",
                                 width: 80,
                               ),
                       ),
@@ -91,7 +91,7 @@ class Chouti extends StatelessWidget {
             //       padding: const EdgeInsets.all(20),
             //       child: ClipRRect(
             //         borderRadius: const BorderRadius.all(Radius.circular(40)),
-            //         child: Image.asset("assets/404.png"),
+            //         child: Image.asset("assets/404.svg"),
             //         // child: CachedNetworkImage(
             //         //   imageUrl: Doghouse.avatarurl,
             //         //   progressIndicatorBuilder:
@@ -99,7 +99,7 @@ class Chouti extends StatelessWidget {
             //         //           CircularProgressIndicator(
             //         //               value: downloadProgress.progress),
             //         //   errorWidget: (context, url, error) =>
-            //         //       Image.asset("assets/404.png"),
+            //         //       Image.asset("assets/404.svg"),
             //         // ),
             //       ),
             //     ))

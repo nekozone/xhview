@@ -5,6 +5,7 @@ import '../tool/threadmodel.dart';
 import '../widget/error.dart';
 import '../widget/notehead.dart';
 import '../widget/notebody.dart';
+import '../widget/notefoot.dart';
 
 class Thread extends StatefulWidget {
   const Thread({super.key});
@@ -162,6 +163,39 @@ class _ThreadViewState extends State<ThreadView> {
               rawHtmlStr = rawHtmlStr.replaceAll("<br/>", "\n");
               rawHtmlStr = rawHtmlStr.replaceAll("<br />", "\n");
               final phtml = parser.parse(rawHtmlStr);
+              if (nowPage == 1 && index == 0) {
+                return Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                        // height: 40,
+                        child: Text(
+                          posts.title,
+                          // strutStyle: const StrutStyle(
+                          // forceStrutHeight: true, height: 1.5, leading: 0),
+                          style: TextStyle(
+                              // wordSpacing: 100,
+                              height: 1,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.fontSize),
+                        )),
+                    NoteHead(
+                        username: item.author,
+                        avatar: item.avatar,
+                        time: item.time,
+                        lou: item.lou,
+                        pid: item.pid,
+                        uid: item.uid),
+                    const Divider(),
+                    NoteBody(ele: phtml),
+                    const NoteFoot()
+                  ],
+                );
+              }
               return Column(
                 children: [
                   NoteHead(
@@ -173,6 +207,7 @@ class _ThreadViewState extends State<ThreadView> {
                       uid: item.uid),
                   const Divider(),
                   NoteBody(ele: phtml),
+                  const NoteFoot()
                 ],
               );
             }

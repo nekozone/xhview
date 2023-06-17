@@ -70,8 +70,10 @@ class IndexList extends StatelessWidget {
     ));
     distWidgetList.add(Container(
       padding: const EdgeInsets.only(top: 10, bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 5,
+        alignment: WrapAlignment.center,
         children: [
           Text(
             "帖子数:${XhStatus.xhstatus.info.notenum}",
