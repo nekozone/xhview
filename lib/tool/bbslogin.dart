@@ -10,8 +10,10 @@ Future<bool> bbslogin(String username, String password) async {
   final bt = utf8.encode(password);
   final md5str = md5.convert(bt).toString();
   late ReturnData res;
-  if ((password == UserProfiles.password ||
-          password == UserProfiles.password.substring(0, 8)) &&
+  if ((password ==
+          (UserProfiles.password.length >= 8
+              ? UserProfiles.password.substring(0, 8)
+              : UserProfiles.password)) &&
       username == UserProfiles.username) {
     res = await NetWorkRequest.login(username, UserProfiles.password);
   } else {
