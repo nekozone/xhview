@@ -39,5 +39,24 @@ class UserspaceInfo {
       }
       spaceinfo = infomap;
     }
+
+    // 获取退出链接
+
+    final exitbunele = document.getElementsByClassName("btn_exit");
+
+    if (exitbunele.isEmpty) {
+      logouturl = null;
+      return true;
+    } else {
+      final exita = exitbunele[0].getElementsByTagName("a")[0];
+      final href = exita.attributes["href"];
+      if (href == null || href.isEmpty) {
+        logouturl = null;
+        return true;
+      } else {
+        logouturl = "https://bbs.dippstar.com/$href";
+        return true;
+      }
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 // import '../tool/profile.dart';
 import '../tool/status.dart';
+import '../tool/userspacemodel.dart';
 
 class Chouti extends StatelessWidget {
   const Chouti({Key? key, this.page = 'home'})
@@ -21,11 +22,18 @@ class Chouti extends StatelessWidget {
               color: Colors.blue,
             ),
             child: InkWell(
-                onTap: !XhStatus.xhstatus.isLogin
-                    ? () {
-                        Navigator.pushNamed(context, '/login');
-                      }
-                    : null,
+                onTap: () {
+                  if (XhStatus.xhstatus.isLogin) {
+                    final userargs = UserSpaceArgs(
+                        uid: XhStatus.xhstatus.userinfo.uid,
+                        name: XhStatus.xhstatus.userinfo.username,
+                        avatar: XhStatus.xhstatus.userinfo.avatar.toString());
+                    Navigator.pushNamed(context, '/userspace',
+                        arguments: userargs);
+                  } else {
+                    Navigator.pushNamed(context, '/login');
+                  }
+                },
                 child: Row(
                   children: <Widget>[
                     Padding(

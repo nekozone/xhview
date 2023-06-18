@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../tool/userspacemodel.dart';
+
 class NoteHead extends StatelessWidget {
   final String username;
   final String avatar;
@@ -22,8 +24,8 @@ class NoteHead extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //TODO: 点击头像
-        // print("点击了头像");
+        final args = UserSpaceArgs(name: username, avatar: avatar, uid: uid);
+        Navigator.pushNamed(context, '/userspace', arguments: args);
       },
       child: SizedBox(
         height: 60,

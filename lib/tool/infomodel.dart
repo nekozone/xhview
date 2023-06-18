@@ -1,5 +1,5 @@
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+// import 'package:device_info_plus/device_info_plus.dart';
 
 class PackageInfoModel {
   static late String appName;
@@ -25,28 +25,28 @@ class PackageInfoModel {
   }
 }
 
-class DeviceInfoModel {
-  static late String deviceName;
-  static late String deviceModel;
-  static late String deviceVersion;
-  static late String deviceSdk;
-  static late String deviceIsPhysicalDevice;
-  static late String deviceAndroidId;
-  static late String devicecodename;
-  static bool isInit = false;
+// class DeviceInfoModel {
+//   static late String deviceName;
+//   static late String deviceModel;
+//   static late String deviceVersion;
+//   static late String deviceSdk;
+//   static late String deviceIsPhysicalDevice;
+//   static late String deviceAndroidId;
+//   static late String devicecodename;
+//   static bool isInit = false;
 
-  static init() async {
-    if (isInit) {
-      return;
-    }
-    final info = await DeviceInfoPlugin().androidInfo;
-    deviceName = info.device;
-    deviceModel = info.model;
-    deviceVersion = info.version.release;
-    deviceSdk = info.version.sdkInt.toString();
-    deviceIsPhysicalDevice = info.isPhysicalDevice.toString();
-    deviceAndroidId = info.serialNumber;
-    devicecodename = info.version.codename;
-    isInit = true;
-  }
-}
+//   static init() async {
+//     if (isInit) {
+//       return;
+//     }
+//     final info = await DeviceInfoPlugin().androidInfo;
+//     deviceName = info.device;
+//     deviceModel = info.model;
+//     deviceVersion = info.version.release;
+//     deviceSdk = info.version.sdkInt.toString();
+//     deviceIsPhysicalDevice = info.isPhysicalDevice.toString();
+//     deviceAndroidId = info.serialNumber;
+//     devicecodename = info.version.codename;
+//     isInit = true;
+//   }
+// }

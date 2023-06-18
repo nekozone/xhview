@@ -204,6 +204,10 @@ List<String> rphl2(Contitem item, ItemStyle? parentstyle, String? linksrc) {
   return chdstr;
 }
 
+const rawHtml2 = """
+
+""";
+
 void main(List<String> args) {
   var rawHtmla = rawHtml2;
   rawHtmla = rawHtmla.replaceAll('<br>', '\n');

@@ -155,6 +155,7 @@ class _ForumViewState extends State<ForumView> {
                   ),
                 );
               }
+              return null;
               // return ListTile(title: Text("$index"));
             }));
   }
