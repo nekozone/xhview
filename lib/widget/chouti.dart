@@ -99,7 +99,7 @@ class Chouti extends StatelessWidget {
             //       padding: const EdgeInsets.all(20),
             //       child: ClipRRect(
             //         borderRadius: const BorderRadius.all(Radius.circular(40)),
-            //         child: Image.asset("assets/404.svg"),
+            //         child: Image.asset("assets/404.png"),
             //         // child: CachedNetworkImage(
             //         //   imageUrl: Doghouse.avatarurl,
             //         //   progressIndicatorBuilder:

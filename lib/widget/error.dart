@@ -14,7 +14,7 @@ class ErrorDisplay extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/404.svg"),
+              Image.asset("assets/404.png"),
               SelectableText(
                 errorinfo,
                 style: const TextStyle(fontSize: 20),
