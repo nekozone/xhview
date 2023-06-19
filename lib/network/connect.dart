@@ -7,14 +7,14 @@ import '../tool/profile.dart';
 Options options = Options(
   headers: {
     "User-Agent":
-        "Mozilla/5.0 (Linux; Android 10; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36  XhView",
+        "Mozilla/5.0 (Linux; Android 10; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36  XhView 0.0.1",
   },
 );
 
 Options pcoptions = Options(
   headers: {
     "User-Agent":
-        "Mozilla/5.0 (X11; Linux x86_64; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 XhView",
+        "Mozilla/5.0 (X11; Linux x86_64; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 XhView 0.0.1",
   },
 );
 
