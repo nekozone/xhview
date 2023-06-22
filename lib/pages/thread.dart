@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as parser;
 import '../core/thread.dart';
 import '../tool/threadmodel.dart';
+import '../tool/replymodel.dart';
 import '../widget/error.dart';
 import '../widget/notehead.dart';
 import '../widget/notebody.dart';
@@ -40,7 +41,12 @@ class _ThreadState extends State<Thread> {
             },
             icon: const Icon(Icons.arrow_back)),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.edit_note))
+          IconButton(
+              onPressed: () {
+                final replyargs = ReplyArgs(args.fid, args.id, null);
+                Navigator.pushNamed(context, '/reply', arguments: replyargs);
+              },
+              icon: const Icon(Icons.edit_note))
         ],
       ),
       body: ThreadView(id: args.id, setpagetitle: setpagetitle),

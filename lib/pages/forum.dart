@@ -128,7 +128,7 @@ class _ForumViewState extends State<ForumView> {
 
                 return InkWell(
                   onTap: () {
-                    final args = ThreadArgs(threads.title, item.tid);
+                    final args = ThreadArgs(threads.title, item.tid, widget.id);
                     Navigator.pushNamed(context, '/thread', arguments: args);
                   },
                   child: ListTile(

@@ -8,11 +8,11 @@ Future<String> getPeople() async {
       "https://bbs.dippstar.com/forum.php?forumlist=1&mobile=no&mobile=1&simpletype=no");
   // print(res);
   final document = parse(res.data);
-  var Restr = "";
+  var restr = "";
   final elements = document.getElementsByClassName("box");
   for (var element in elements) {
-    Restr += element.text;
+    restr += element.text;
     // print("$rawText\n\n");
   }
-  return Restr;
+  return restr;
 }
