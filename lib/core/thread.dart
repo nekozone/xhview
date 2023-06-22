@@ -3,6 +3,7 @@
 // import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+import '../tool/status.dart';
 import '../network/connect.dart';
 
 // final dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
@@ -92,6 +93,13 @@ class Posts {
         } else {
           maxpage = int.parse(match.elementAt(0).group(0)!);
         }
+      }
+    }
+    // 获取formhash
+    if (XhStatus.xhstatus.isLogin) {
+      final formhashele = document.querySelector('input[name="formhash"]');
+      if (formhashele != null) {
+        XhStatus.xhstatus.userinfo.formhash = formhashele.attributes['value']!;
       }
     }
     // 获取帖子列表

@@ -5,6 +5,7 @@ class UserInfo {
   String username;
   int uid;
   Uri avatar;
+  String? formhash;
   UserInfo({required this.username, required this.uid, required this.avatar});
 }
 
@@ -12,19 +13,19 @@ class MyInfo {
   late UserInfo info;
   Future<bool> get() async {
     final res = await NetWorkRequest.getpcHtml("https://bbs.dippstar.com/");
-    print("Get Index code: ${res.code}");
+    // print("Get Index code: ${res.code}");
     if (res.code != 200) {
       return false;
     }
     final document = parse(res.data);
     final nameelement = document.getElementsByClassName("vwmy");
     if (nameelement.isEmpty) {
-      print('No vwmy');
+      // print('No vwmy');
       return false;
     }
     final namelink = nameelement[0].getElementsByTagName('a');
     if (namelink.isEmpty) {
-      print('No a');
+      // print('No a');
       return false;
     }
     final username = namelink[0].text;
@@ -36,17 +37,17 @@ class MyInfo {
     final uid = int.parse(uidstr!);
     final avaele = document.getElementsByClassName("avt");
     if (avaele.isEmpty) {
-      print('No avt');
+      // print('No avt');
       return false;
     }
     final imgele = avaele[0].getElementsByTagName('img');
     if (imgele.isEmpty) {
-      print('No img');
+      // print('No img');
       return false;
     }
     final avalink = imgele[0].attributes['src']?.replaceAll("small", 'big');
     if (avalink == null) {
-      print('No src');
+      // print('No src');
       return false;
     }
     final avatar = Uri.parse(avalink);

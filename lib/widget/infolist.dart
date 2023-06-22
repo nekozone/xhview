@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../tool/infomodel.dart';
+import '../tool/status.dart';
 
 class InfoList extends StatefulWidget {
   const InfoList({super.key});
@@ -44,6 +45,12 @@ class _InfoListState extends State<InfoList> {
         title: const Text('Build Signature'),
         subtitle: Text(PackageInfoModel.buildSignature),
       ),
+      ListTile(
+        title: const Text("FormHash"),
+        subtitle: SelectableText(XhStatus.xhstatus.isLogin
+            ? (XhStatus.xhstatus.userinfo.formhash ?? "underfined")
+            : "未登录"),
+      )
       // ListTile(
       //   title: const Text('Install Store'),
       //   subtitle: Text(PackageInfoModel.installStore),

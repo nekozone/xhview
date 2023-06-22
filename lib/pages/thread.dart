@@ -39,6 +39,9 @@ class _ThreadState extends State<Thread> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back)),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.edit_note))
+        ],
       ),
       body: ThreadView(id: args.id, setpagetitle: setpagetitle),
     );

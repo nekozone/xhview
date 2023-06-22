@@ -7,14 +7,14 @@ import '../tool/profile.dart';
 Options options = Options(
   headers: {
     "User-Agent":
-        "Mozilla/5.0 (Linux; Android 10; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36  XhView 0.0.1",
+        "Mozilla/5.0 (Linux; Android 10; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36  XhView/0.0.1",
   },
 );
 
 Options pcoptions = Options(
   headers: {
     "User-Agent":
-        "Mozilla/5.0 (X11; Linux x86_64; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 XhView 0.0.1",
+        "Mozilla/5.0 (X11; Linux x86_64; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 XhView/0.0.1",
   },
 );
 
@@ -36,14 +36,22 @@ class NetWorkRequest {
     dio.interceptors.add(CookieManager(jar));
   }
 
-  static Future<ReturnData> getHtml(
-    String url,
-  ) async {
-    final returndata = ReturnData();
-    final res = await dio.get(url, options: options);
-    returndata.data = res.data;
-    returndata.code = res.statusCode!;
-    return returndata;
+  static Future<ReturnData> getHtml(String url,
+      {Map<String, dynamic>? formdata}) async {
+    if (formdata == null) {
+      final returndata = ReturnData();
+      final res = await dio.get(url, options: options);
+      returndata.data = res.data;
+      returndata.code = res.statusCode!;
+      return returndata;
+    } else {
+      final returndata = ReturnData();
+      final form = FormData.fromMap(formdata);
+      final res = await dio.get(url, data: form, options: options);
+      returndata.data = res.data;
+      returndata.code = res.statusCode!;
+      return returndata;
+    }
   }
 
   static Future<ReturnData> getpcHtml(
@@ -54,6 +62,24 @@ class NetWorkRequest {
     returndata.data = res.data;
     returndata.code = res.statusCode!;
     return returndata;
+  }
+
+  static Future<ReturnData> post(String url,
+      {Map<String, dynamic>? formdata}) async {
+    if (formdata == null) {
+      final returndata = ReturnData();
+      final res = await dio.post(url, options: options);
+      returndata.data = res.data;
+      returndata.code = res.statusCode!;
+      return returndata;
+    } else {
+      final returndata = ReturnData();
+      final form = FormData.fromMap(formdata);
+      final res = await dio.post(url, data: form, options: options);
+      returndata.data = res.data;
+      returndata.code = res.statusCode!;
+      return returndata;
+    }
   }
 
   static Future<ReturnData> login(String username, String password) async {
