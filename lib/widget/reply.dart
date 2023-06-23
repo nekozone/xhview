@@ -14,6 +14,7 @@ class _ReplyViewState extends State<ReplyView> {
   bool hasallprams = false;
   bool isreplying = false;
   late Reply reply;
+  late ReplyArgs arg;
   Map<String, dynamic> postprame = {};
   String pichash = "";
   TextEditingController textcont = TextEditingController();
@@ -29,7 +30,7 @@ class _ReplyViewState extends State<ReplyView> {
   }
 
   void _init() async {
-    final arg = widget.args;
+    arg = widget.args;
     reply = Reply(arg.fid, arg.tid, arg.pid);
     final result = await reply.getinfo();
     if (result) {
@@ -78,38 +79,103 @@ class _ReplyViewState extends State<ReplyView> {
               onPressed: (!hasallprams || isreplying)
                   ? null
                   : () {
-                      setState(() {
-                        isreplying = true;
-                      });
-                      Future.delayed(const Duration(seconds: 3), () {
-                        setState(() {
-                          isreplying = false;
-                        });
-                      });
+                      // setState(() {
+                      //   isreplying = true;
+                      // });
+                      _reply();
+                      // Future.delayed(const Duration(seconds: 3), () {
+                      //   setState(() {
+                      //     isreplying = false;
+                      //   });
+                      // });
                     },
               icon: const Icon(Icons.cloud_upload),
               label: Text((isreplying) ? '回复中...' : '回复')),
         ));
   }
 
+  // Widget showItemx() {
+  //   List<Widget> items = [];
+  //   if (hasallprams) {
+  //     for (var item in postprame.entries) {
+  //       items.add(ListTile(
+  //         title: Text(item.key),
+  //         subtitle: SelectableText(item.value.toString()),
+  //       ));
+  //     }
+  //     items.add(ListTile(
+  //       title: const Text("Posturl"),
+  //       subtitle: SelectableText(reply.posturl),
+  //     ));
+  //   }
+  //   items.add(ListTile(
+  //     title: const Text("PicHash"),
+  //     subtitle: SelectableText(pichash),
+  //   ));
+  //   return Column(children: items);
+  // }
+
   Widget showItem() {
-    List<Widget> items = [];
     if (hasallprams) {
-      for (var item in postprame.entries) {
-        items.add(ListTile(
-          title: Text(item.key),
-          subtitle: SelectableText(item.value.toString()),
-        ));
+      if (reply.postdata["noticeauthormsg"] != null &&
+          reply.postdata["noticeauthormsg"] != "") {
+        return Container(
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).primaryColorDark,
+                width: 0.5,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(6))),
+          child: Text(reply.postdata["noticeauthormsg"]!),
+        );
+      } else {
+        return Container(
+          padding: const EdgeInsets.only(top: 10),
+          child: const Divider(
+            height: 0,
+          ),
+        );
       }
-      items.add(ListTile(
-        title: const Text("Posturl"),
-        subtitle: SelectableText(reply.posturl),
-      ));
+    } else {
+      return Container(
+        padding: const EdgeInsets.only(top: 10),
+        child: const Divider(
+          height: 0,
+        ),
+      );
     }
-    items.add(ListTile(
-      title: const Text("PicHash"),
-      subtitle: SelectableText(pichash),
-    ));
-    return Column(children: items);
+  }
+
+  void _reply() {
+    if (isreplying) {
+      return;
+    }
+    setState(() {
+      isreplying = true;
+    });
+    if (textcont.text == "") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("请输入内容"),
+      ));
+      return;
+    }
+    reply.execreply(textcont.text).then((result) {
+      if (result) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("回复成功"),
+        ));
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Error\n${reply.errinfo}}"),
+        ));
+        setState(() {
+          isreplying = false;
+        });
+      }
+    });
   }
 }

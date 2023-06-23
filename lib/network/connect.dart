@@ -86,7 +86,7 @@ class NetWorkRequest {
       final returndata = ReturnData();
       final form = FormData.fromMap(formdata);
       final res = await dio.post(url, data: form, options: postoptions);
-      returndata.data = res.data;
+      returndata.data = res.data ?? "";
       returndata.code = res.statusCode!;
       return returndata;
     }

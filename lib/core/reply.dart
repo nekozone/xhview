@@ -53,7 +53,7 @@ class Reply {
     }
 
     // 解析checkbox参数
-    final xll = document.querySelector('input[name="noticetrimstr"]');
+    // final xll = document.querySelector('input[name="noticetrimstr"]');
     final checkboxeles = document.querySelectorAll('input[type="checkbox"]');
     if (checkboxeles.isNotEmpty) {
       for (var checkboxele in checkboxeles) {
@@ -94,7 +94,14 @@ class Reply {
     postdata["message"] = msg;
     final res = await NetWorkRequest.post(posturl, formdata: postdata);
     if (res.code != 301) {
-      errinfo = res.data;
+      final rawerrinfo = res.data;
+      final errele = parse(rawerrinfo);
+      final errinfoele = errele.querySelector("p");
+      if (errinfoele != null) {
+        errinfo = errinfoele.text;
+      } else {
+        errinfo = "未知错误";
+      }
       return false;
     }
     return true;
