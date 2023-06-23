@@ -20,9 +20,7 @@ class ReplyPage extends StatelessWidget {
             icon: const Icon(Icons.close),
           ),
         ),
-        body: replyargs.pid == null
-            ? ReplyView(args: replyargs)
-            : ReplyViewx(args: replyargs));
+        body: ReplyView(args: replyargs));
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../tool/replymodel.dart';
+import '../core/reply.dart';
 
 class ReplyView extends StatefulWidget {
   const ReplyView({super.key, required this.args});
@@ -12,14 +13,30 @@ class ReplyView extends StatefulWidget {
 class _ReplyViewState extends State<ReplyView> {
   bool hasallprams = false;
   bool isreplying = false;
+  Map<String, dynamic> postprame = {};
+  String pichash = "";
   TextEditingController textcont = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.args.pid == null) {
-      hasallprams = true;
+    // if (widget.args.pid == null) {
+    //   hasallprams = true;
+    // }
+    _init();
+  }
+
+  void _init() async {
+    final arg = widget.args;
+    final reply = Reply(arg.fid, arg.tid, arg.pid);
+    final result = await reply.getinfo();
+    if (result) {
+      setState(() {
+        hasallprams = true;
+        postprame = reply.postdata;
+        pichash = reply.pichash;
+      });
     }
   }
 
@@ -33,7 +50,7 @@ class _ReplyViewState extends State<ReplyView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(children: [inputbox(), replyButton()]),
+      child: Column(children: [showItem(), inputbox(), replyButton()]),
     );
   }
 
@@ -70,7 +87,21 @@ class _ReplyViewState extends State<ReplyView> {
                       });
                     },
               icon: const Icon(Icons.cloud_upload),
-              label: Text(isreplying ? '回复中...' : '回复')),
+              label: Text((isreplying) ? '回复中...' : '回复')),
         ));
+  }
+
+  Widget showItem() {
+    List<Widget> items = [];
+    if (hasallprams) {
+      for (var item in postprame.entries) {
+        items.add(SelectableText("${item.key}: ${item.value}"));
+      }
+    }
+    items.add(ListTile(
+      title: const Text("PicHash"),
+      subtitle: SelectableText(pichash),
+    ));
+    return Column(children: items);
   }
 }

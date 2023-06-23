@@ -49,7 +49,7 @@ class _ThreadState extends State<Thread> {
               icon: const Icon(Icons.edit_note))
         ],
       ),
-      body: ThreadView(id: args.id, setpagetitle: setpagetitle),
+      body: ThreadView(fid: args.fid, id: args.id, setpagetitle: setpagetitle),
     );
   }
 
@@ -63,8 +63,13 @@ class _ThreadState extends State<Thread> {
 }
 
 class ThreadView extends StatefulWidget {
-  const ThreadView({super.key, required this.id, required this.setpagetitle});
+  const ThreadView(
+      {super.key,
+      required this.fid,
+      required this.id,
+      required this.setpagetitle});
   final int id;
+  final int fid;
   final Function setpagetitle;
 
   @override
@@ -201,7 +206,7 @@ class _ThreadViewState extends State<ThreadView> {
                         uid: item.uid),
                     const Divider(),
                     NoteBody(ele: phtml),
-                    const NoteFoot()
+                    NoteFoot(fid: widget.fid, tid: widget.id, pid: item.pid)
                   ],
                 );
               }
@@ -216,7 +221,7 @@ class _ThreadViewState extends State<ThreadView> {
                       uid: item.uid),
                   const Divider(),
                   NoteBody(ele: phtml),
-                  const NoteFoot()
+                  NoteFoot(fid: widget.fid, tid: widget.id, pid: item.pid)
                 ],
               );
             }
