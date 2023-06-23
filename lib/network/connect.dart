@@ -11,6 +11,16 @@ Options options = Options(
   },
 );
 
+Options postoptions = Options(
+    headers: {
+      "User-Agent":
+          "Mozilla/5.0 (Linux; Android 10; Quantum 550W Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36  XhView/0.0.1",
+    },
+    followRedirects: false,
+    validateStatus: (status) {
+      return status! < 500;
+    });
+
 Options pcoptions = Options(
   headers: {
     "User-Agent":
@@ -68,14 +78,14 @@ class NetWorkRequest {
       {Map<String, dynamic>? formdata}) async {
     if (formdata == null) {
       final returndata = ReturnData();
-      final res = await dio.post(url, options: options);
+      final res = await dio.post(url, options: postoptions);
       returndata.data = res.data;
       returndata.code = res.statusCode!;
       return returndata;
     } else {
       final returndata = ReturnData();
       final form = FormData.fromMap(formdata);
-      final res = await dio.post(url, data: form, options: options);
+      final res = await dio.post(url, data: form, options: postoptions);
       returndata.data = res.data;
       returndata.code = res.statusCode!;
       return returndata;

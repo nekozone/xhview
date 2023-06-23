@@ -13,6 +13,7 @@ class ReplyView extends StatefulWidget {
 class _ReplyViewState extends State<ReplyView> {
   bool hasallprams = false;
   bool isreplying = false;
+  late Reply reply;
   Map<String, dynamic> postprame = {};
   String pichash = "";
   TextEditingController textcont = TextEditingController();
@@ -29,7 +30,7 @@ class _ReplyViewState extends State<ReplyView> {
 
   void _init() async {
     final arg = widget.args;
-    final reply = Reply(arg.fid, arg.tid, arg.pid);
+    reply = Reply(arg.fid, arg.tid, arg.pid);
     final result = await reply.getinfo();
     if (result) {
       setState(() {
@@ -95,8 +96,15 @@ class _ReplyViewState extends State<ReplyView> {
     List<Widget> items = [];
     if (hasallprams) {
       for (var item in postprame.entries) {
-        items.add(SelectableText("${item.key}: ${item.value}"));
+        items.add(ListTile(
+          title: Text(item.key),
+          subtitle: SelectableText(item.value.toString()),
+        ));
       }
+      items.add(ListTile(
+        title: const Text("Posturl"),
+        subtitle: SelectableText(reply.posturl),
+      ));
     }
     items.add(ListTile(
       title: const Text("PicHash"),

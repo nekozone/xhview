@@ -6,7 +6,9 @@ class Reply {
   late int tid;
   late int? pid;
   late String pichash;
+  late String posturl;
   late String msg;
+  late String errinfo;
   final Map<String, String> postdata = {};
   Reply(this.fid, this.tid, this.pid);
 
@@ -27,6 +29,16 @@ class Reply {
     // print(res.data);
 
     final document = parse(res.data);
+
+    // 解析posturl
+
+    final formele = document.querySelector("form");
+
+    if (formele == null) {
+      return false;
+    }
+    posturl = "https://bbs.dippstar.com/${formele.attributes['action']}";
+
     final hiddeninputeles = document.querySelectorAll("input[type=hidden]");
 
     if (hiddeninputeles.isEmpty) {
@@ -35,7 +47,6 @@ class Reply {
     for (var hiddeninput in hiddeninputeles) {
       final key = hiddeninput.attributes["name"];
       final value = hiddeninput.attributes["value"];
-      print("$key:$value");
       if (key != null && value != null) {
         postdata[key] = value;
       }
@@ -43,9 +54,6 @@ class Reply {
 
     // 解析checkbox参数
     final xll = document.querySelector('input[name="noticetrimstr"]');
-    print("xxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    print(xll?.outerHtml);
-    print("xxxxxxxxxxxxxxxxxxxxxxxxxxx");
     final checkboxeles = document.querySelectorAll('input[type="checkbox"]');
     if (checkboxeles.isNotEmpty) {
       for (var checkboxele in checkboxeles) {
@@ -76,6 +84,19 @@ class Reply {
       pichash = "";
     }
 
+    return true;
+  }
+
+  Future<bool> execreply(String msg) async {
+    if (msg.length <= 4) {
+      msg = "\u200B\u200B\u200B\u200B$msg";
+    }
+    postdata["message"] = msg;
+    final res = await NetWorkRequest.post(posturl, formdata: postdata);
+    if (res.code != 301) {
+      errinfo = res.data;
+      return false;
+    }
     return true;
   }
 }
