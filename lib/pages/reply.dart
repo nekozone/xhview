@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../tool/replymodel.dart';
-import '../tool/status.dart';
+// import '../tool/status.dart';
 import '../widget/reply.dart';
 
 class ReplyPage extends StatelessWidget {
@@ -50,12 +50,12 @@ class _ReplyViewxState extends State<ReplyViewx> {
               ? "underfined"
               : widget.args.pid.toString()),
         ),
-        ListTile(
-          title: const Text("FormHash"),
-          subtitle: SelectableText(XhStatus.xhstatus.isLogin
-              ? (XhStatus.xhstatus.userinfo.formhash ?? "underfined")
-              : "未登录"),
-        )
+        // ListTile(
+        //   title: const Text("FormHash"),
+        //   subtitle: SelectableText(XhStatus.xhstatus.isLogin
+        //       ? (XhStatus.xhstatus.userinfo.formhash ?? "underfined")
+        //       : "未登录"),
+        // )
       ]),
     );
   }

@@ -5,7 +5,7 @@ class UserInfo {
   String username;
   int uid;
   Uri avatar;
-  String? formhash;
+  // String? formhash;
   UserInfo({required this.username, required this.uid, required this.avatar});
 }
 

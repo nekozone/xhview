@@ -96,12 +96,12 @@ class Posts {
       }
     }
     // 获取formhash
-    if (XhStatus.xhstatus.isLogin) {
-      final formhashele = document.querySelector('input[name="formhash"]');
-      if (formhashele != null) {
-        XhStatus.xhstatus.userinfo.formhash = formhashele.attributes['value']!;
-      }
-    }
+    // if (XhStatus.xhstatus.isLogin) {
+    //   final formhashele = document.querySelector('input[name="formhash"]');
+    //   if (formhashele != null) {
+    //     XhStatus.xhstatus.userinfo.formhash = formhashele.attributes['value']!;
+    //   }
+    // }
     // 获取帖子列表
     postlist = _getitem(document);
     return true;
