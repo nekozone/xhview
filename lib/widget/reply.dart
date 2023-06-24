@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../tool/replymodel.dart';
+import '../widget/error.dart';
+import '../tool/status.dart';
 import '../core/reply.dart';
 
 class ReplyView extends StatefulWidget {
@@ -31,14 +33,16 @@ class _ReplyViewState extends State<ReplyView> {
 
   void _init() async {
     arg = widget.args;
-    reply = Reply(arg.fid, arg.tid, arg.pid);
-    final result = await reply.getinfo();
-    if (result) {
-      setState(() {
-        hasallprams = true;
-        postprame = reply.postdata;
-        pichash = reply.pichash;
-      });
+    if (XhStatus.xhstatus.isLogin) {
+      reply = Reply(arg.fid, arg.tid, arg.pid);
+      final result = await reply.getinfo();
+      if (result) {
+        setState(() {
+          hasallprams = true;
+          postprame = reply.postdata;
+          pichash = reply.pichash;
+        });
+      }
     }
   }
 
@@ -51,6 +55,10 @@ class _ReplyViewState extends State<ReplyView> {
 
   @override
   Widget build(BuildContext context) {
+    if (!XhStatus.xhstatus.isLogin) {
+      return const ErrorDisplay("未登录", "3dd24949-1746-499f-8801-cb2067cbbb65");
+    }
+
     return SingleChildScrollView(
       child: Column(children: [showItem(), inputbox(), replyButton()]),
     );

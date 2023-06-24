@@ -3,7 +3,7 @@
 // import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
-import '../tool/status.dart';
+// import '../tool/status.dart';
 import '../network/connect.dart';
 
 // final dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
