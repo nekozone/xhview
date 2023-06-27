@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '../tool/replymodel.dart';
 import '../widget/error.dart';
 import '../tool/status.dart';
@@ -19,7 +21,9 @@ class _ReplyViewState extends State<ReplyView> {
   late ReplyArgs arg;
   Map<String, dynamic> postprame = {};
   String pichash = "";
+  List<String> piclist = [];
   TextEditingController textcont = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -60,7 +64,8 @@ class _ReplyViewState extends State<ReplyView> {
     }
 
     return SingleChildScrollView(
-      child: Column(children: [showItem(), inputbox(), replyButton()]),
+      child: Column(
+          children: [showItem(), inputbox(), replyButton(), piclistview()]),
     );
   }
 
@@ -185,5 +190,62 @@ class _ReplyViewState extends State<ReplyView> {
         });
       }
     });
+  }
+
+  Widget piclistview() {
+    List<Widget> piclistview = [];
+    for (var item in piclist) {
+      final xk = Container(
+        height: 80,
+        width: 70,
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).primaryColorDark,
+              width: 0.5,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(6))),
+        child: Stack(fit: StackFit.expand, children: [
+          Image.file(fit: BoxFit.contain, File(item)),
+          Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    piclist.remove(item);
+                  });
+                },
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+              ))
+        ]),
+      );
+      piclistview.add(xk);
+    }
+    return Column(children: [Wrap(children: piclistview), addpicbutton()]);
+  }
+
+  Widget addpicbutton() {
+    return Container(
+        padding: const EdgeInsets.all(5),
+        child: TextButton(
+          onPressed: () async {
+            pickpics();
+          },
+          child: const Text("添加图片"),
+        ));
+  }
+
+  void pickpics() async {
+    final List<XFile> images = await _picker.pickMultiImage();
+    if (images.isNotEmpty) {
+      for (var item in images) {
+        piclist.add(item.path);
+      }
+      setState(() {});
+    }
   }
 }
