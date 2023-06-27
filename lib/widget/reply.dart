@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:io';
 import '../tool/replymodel.dart';
 import '../widget/error.dart';
 import '../tool/status.dart';
 import '../core/reply.dart';
+import '../core/uploadpic.dart';
 
 class ReplyView extends StatefulWidget {
   const ReplyView({super.key, required this.args});
@@ -22,6 +24,7 @@ class _ReplyViewState extends State<ReplyView> {
   Map<String, dynamic> postprame = {};
   String pichash = "";
   List<String> piclist = [];
+  List<PicInfo> imglist = [];
   TextEditingController textcont = TextEditingController();
   final ImagePicker _picker = ImagePicker();
 
@@ -107,27 +110,6 @@ class _ReplyViewState extends State<ReplyView> {
         ));
   }
 
-  // Widget showItemx() {
-  //   List<Widget> items = [];
-  //   if (hasallprams) {
-  //     for (var item in postprame.entries) {
-  //       items.add(ListTile(
-  //         title: Text(item.key),
-  //         subtitle: SelectableText(item.value.toString()),
-  //       ));
-  //     }
-  //     items.add(ListTile(
-  //       title: const Text("Posturl"),
-  //       subtitle: SelectableText(reply.posturl),
-  //     ));
-  //   }
-  //   items.add(ListTile(
-  //     title: const Text("PicHash"),
-  //     subtitle: SelectableText(pichash),
-  //   ));
-  //   return Column(children: items);
-  // }
-
   Widget showItem() {
     if (hasallprams) {
       if (reply.postdata["noticeauthormsg"] != null &&
@@ -175,6 +157,11 @@ class _ReplyViewState extends State<ReplyView> {
       ));
       return;
     }
+    if (imglist.isNotEmpty) {
+      for (var item in imglist) {
+        reply.postdata[item.attachstr] = '';
+      }
+    }
     reply.execreply(textcont.text).then((result) {
       if (result) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -192,7 +179,7 @@ class _ReplyViewState extends State<ReplyView> {
     });
   }
 
-  Widget piclistview() {
+  Widget piclistviewx() {
     List<Widget> piclistview = [];
     for (var item in piclist) {
       final xk = Container(
@@ -228,24 +215,104 @@ class _ReplyViewState extends State<ReplyView> {
     return Column(children: [Wrap(children: piclistview), addpicbutton()]);
   }
 
+  Widget piclistview() {
+    List<Widget> piclistview = [];
+    for (var item in imglist) {
+      final xk = Container(
+        height: 80,
+        width: 70,
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).primaryColorDark,
+              width: 0.5,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(6))),
+        child: Stack(fit: StackFit.expand, children: [
+          CachedNetworkImage(
+            imageUrl: item.url,
+            fit: BoxFit.contain,
+            progressIndicatorBuilder: (context, url, progress) => Center(
+              child: CircularProgressIndicator(
+                value: progress.progress,
+              ),
+            ),
+            errorWidget: (context, url, error) => Image.asset("assets/404.png"),
+          ),
+          Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                onTap: () {
+                  delpostpic(item.id).then((res) {
+                    if (res) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Remove Success"),
+                      ));
+                      setState(() {
+                        imglist.remove(item);
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("NetWork Error"),
+                      ));
+                      setState(() {
+                        imglist.remove(item);
+                      });
+                    }
+                  });
+                },
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+              ))
+        ]),
+      );
+      piclistview.add(xk);
+    }
+    return Column(children: [Wrap(children: piclistview), addpicbutton()]);
+  }
+
   Widget addpicbutton() {
     return Container(
         padding: const EdgeInsets.all(5),
-        child: TextButton(
+        child: TextButton.icon(
           onPressed: () async {
             pickpics();
           },
-          child: const Text("添加图片"),
+          icon: const Icon(Icons.add_a_photo),
+          label: const Text("添加图片"),
         ));
   }
 
-  void pickpics() async {
+  void pickpicsx() async {
     final List<XFile> images = await _picker.pickMultiImage();
     if (images.isNotEmpty) {
       for (var item in images) {
         piclist.add(item.path);
       }
       setState(() {});
+    }
+  }
+
+  void pickpics() async {
+    final List<XFile> images = await _picker.pickMultiImage();
+    if (images.isNotEmpty) {
+      for (var item in images) {
+        final arg = UploadArgs(XhStatus.xhstatus.userinfo.uid, pichash, item);
+        uploadpic(arg).then((res) {
+          if (res.status) {
+            imglist
+                .add(PicInfo(res.filename, res.url, res.fileid, res.attachstr));
+            setState(() {});
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("${res.msg}}"),
+            ));
+          }
+        });
+      }
     }
   }
 }

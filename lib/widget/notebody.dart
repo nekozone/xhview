@@ -133,6 +133,7 @@ class NoteBody extends StatelessWidget {
       final quotespin = WidgetSpan(
           child: Container(
         padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
             border: Border.all(
               color: Theme.of(context).primaryColorDark,
