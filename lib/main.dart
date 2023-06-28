@@ -9,6 +9,7 @@ import 'pages/login.dart';
 import 'pages/thread.dart';
 import 'pages/reply.dart';
 import 'pages/userspace.dart';
+import 'pages/postthread.dart';
 import 'tool/profile.dart';
 import 'tool/status.dart';
 
@@ -48,6 +49,7 @@ class XhView extends StatelessWidget {
             '/thread': (context) => const Thread(),
             '/userspace': (context) => const UserSpace(),
             '/reply': (context) => const ReplyPage(),
+            '/postthread': (context) => const PostthreadPage(),
 
             // '/about': (context) => const Dogabout(),
             // '/add': ((context) => const Addpage()),

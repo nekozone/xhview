@@ -12,3 +12,9 @@ class PicInfo {
   late String attachstr;
   PicInfo(this.name, this.url, this.id, this.attachstr);
 }
+
+class PostthreadArgs {
+  final int fid;
+  final String name;
+  PostthreadArgs(this.fid, this.name);
+}

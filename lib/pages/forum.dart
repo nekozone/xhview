@@ -4,6 +4,7 @@ import '../widget/error.dart';
 import '../core/threadlist.dart';
 import '../tool/forummodel.dart';
 import '../tool/threadmodel.dart';
+import '../tool/replymodel.dart';
 
 class Forum extends StatelessWidget {
   const Forum({super.key});
@@ -13,7 +14,19 @@ class Forum extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as ForumArgs;
     return Scaffold(
         drawer: const Chouti(page: 'forum'),
-        appBar: AppBar(title: Text(args.title), centerTitle: true),
+        appBar: AppBar(
+          title: Text(args.title),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  final postthreadargs = PostthreadArgs(args.id, args.title);
+                  Navigator.pushNamed(context, '/postthread',
+                      arguments: postthreadargs);
+                },
+                icon: const Icon(Icons.addchart))
+          ],
+        ),
         body: ForumView(id: args.id));
   }
 }
