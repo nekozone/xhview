@@ -39,6 +39,8 @@ Future<UploadRes> uploadpic(UploadArgs args) async {
   final nowdatatime = DateTime.now();
   final fnm = "Xhview_upload_${nowdatatime.microsecondsSinceEpoch}.$pname";
   final updata = await MultipartFile.fromFile(args.file.path, filename: fnm);
+  // final updata = await MultipartFile.fromBytes(await args.file.readAsBytes(),
+  //     filename: fnm);
   final uploadform = {
     "uid": args.uid,
     "hash": args.pichash,

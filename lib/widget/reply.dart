@@ -308,7 +308,7 @@ class _ReplyViewState extends State<ReplyView> {
             setState(() {});
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("${res.msg}}"),
+              content: Text(res.msg),
             ));
           }
         });
