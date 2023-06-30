@@ -9,6 +9,7 @@ class UserProfiles {
   // static bool isLogin = false;
   static String username = '';
   static String password = '';
+  static bool blocklist = false;
   static late Directory appDocDir;
   static init() async {
     prefs = await SharedPreferences.getInstance();
@@ -28,6 +29,8 @@ class UserProfiles {
 
     username = prefs.getString('username') ?? '';
     password = prefs.getString('password') ?? '';
+
+    blocklist = prefs.getBool('blocklist') ?? false;
   }
 
   static setDarkmode(String mode) async {
@@ -48,5 +51,10 @@ class UserProfiles {
   static setPassword(String pass) async {
     prefs.setString('password', pass);
     password = pass;
+  }
+
+  static setBlocklist(bool block) async {
+    prefs.setBool('blocklist', block);
+    blocklist = block;
   }
 }
