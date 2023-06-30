@@ -1,8 +1,9 @@
 import 'package:sqflite/sqflite.dart';
+import '../tool/blocklist.dart';
 
 class DB {
   static Database? db;
-  static const String dbname = 'my.db';
+  static const String dbname = 'data.db';
   static String path = '';
 
   static Future<void> init() async {
@@ -16,6 +17,7 @@ class DB {
     } catch (ex) {
       // print(ex);
     }
+    BlockList.loadlist();
   }
 
   static void _onCreate(Database db, int version) async {
@@ -31,6 +33,8 @@ class DB {
       CREATE TABLE blockpost(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         tid INTEGER,
+        title TEXT,
+        username TEXT,
         time TEXT
       )
     ''');

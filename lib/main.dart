@@ -2,6 +2,7 @@ import 'package:XhView/network/connect.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'core/db.dart';
 import 'pages/settings.dart';
 import 'pages/index.dart';
 import 'pages/forum.dart';
@@ -11,6 +12,7 @@ import 'pages/reply.dart';
 import 'pages/userspace.dart';
 import 'pages/postthread.dart';
 import 'tool/profile.dart';
+// import 'tool/blocklist.dart';
 import 'tool/status.dart';
 
 void main() async {
@@ -19,6 +21,7 @@ void main() async {
   await UserProfiles.init();
   NetWorkRequest.init();
   await XhStatus.init();
+  DB.init();
   runApp(const XhView());
 }
 
