@@ -34,13 +34,13 @@ class _InfoListState extends State<InfoList> {
       //   subtitle: Text(PackageInfoModel.packageName),
       // ),
       ListTile(
-        title: const Text('Version'),
+        title: const Text('版本'),
         subtitle: Text(PackageInfoModel.version),
       ),
-      // ListTile(
-      //   title: const Text('Build Number'),
-      //   subtitle: Text(PackageInfoModel.buildNumber),
-      // ),
+      ListTile(
+        title: const Text('Build Number'),
+        subtitle: Text(PackageInfoModel.buildNumber),
+      ),
       ListTile(
         title: const Text('Build Signature'),
         subtitle: Text(PackageInfoModel.buildSignature),
