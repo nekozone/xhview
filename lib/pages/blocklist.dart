@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../tool/blocklist.dart';
-import '../tool/profile.dart';
+// import '../tool/profile.dart';
 
 class BlocklistPage extends StatefulWidget {
   const BlocklistPage({super.key});
