@@ -5,6 +5,8 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 // import '../tool/status.dart';
 import '../network/connect.dart';
+import '../tool/blocklist.dart';
+import '../tool/profile.dart';
 
 // final dio = Dio()..httpClientAdapter = Http2Adapter(ConnectionManager());
 
@@ -150,6 +152,14 @@ class Posts {
         item.author = aele[0].text;
         final uidmatch = numexp.firstMatch(aele[0].attributes["href"]!);
         item.uid = int.parse(uidmatch!.group(0)!);
+      }
+
+      // 检测黑名单
+
+      if (UserProfiles.blocklist) {
+        if (BlockList.uid.contains(item.uid)) {
+          continue;
+        }
       }
 
       // 获取作者头像url

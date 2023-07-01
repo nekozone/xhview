@@ -46,7 +46,7 @@ class BlocklistEdit extends StatelessWidget {
         title: const Text('黑名单'),
         trailing: const Icon(Icons.chevron_right),
         onTap: () {
-          // Navigator.pushNamed(context, '/blocklist');
+          Navigator.pushNamed(context, '/blocklist');
         });
   }
 }

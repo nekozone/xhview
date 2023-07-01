@@ -11,6 +11,7 @@ import 'pages/thread.dart';
 import 'pages/reply.dart';
 import 'pages/userspace.dart';
 import 'pages/postthread.dart';
+import 'pages/blocklist.dart';
 import 'tool/profile.dart';
 // import 'tool/blocklist.dart';
 import 'tool/status.dart';
@@ -53,6 +54,7 @@ class XhView extends StatelessWidget {
             '/userspace': (context) => const UserSpace(),
             '/reply': (context) => const ReplyPage(),
             '/postthread': (context) => const PostthreadPage(),
+            '/blocklist': (context) => const BlocklistPage(),
 
             // '/about': (context) => const Dogabout(),
             // '/add': ((context) => const Addpage()),

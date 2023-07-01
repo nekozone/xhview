@@ -1,5 +1,7 @@
 import '../network/connect.dart';
 import 'package:html/parser.dart';
+import '../tool/profile.dart';
+import '../tool/blocklist.dart';
 
 class ThreadItem {
   late String title;
@@ -105,7 +107,14 @@ class Threads {
       final tu = item.getElementsByClassName("icon_tu");
       noteitem.isTu = tu.isNotEmpty;
 
-      threadlist.add(noteitem);
+      // 检查是否在黑名单中
+      if (UserProfiles.blocklist) {
+        if (!BlockList.username.contains(noteitem.author)) {
+          threadlist.add(noteitem);
+        }
+      } else {
+        threadlist.add(noteitem);
+      }
     }
     status = true;
     return true;

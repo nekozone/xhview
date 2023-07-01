@@ -1,8 +1,10 @@
+import 'package:XhView/tool/profile.dart';
 import 'package:flutter/material.dart';
 import '../tool/userspacemodel.dart';
 import '../tool/bbslogout.dart';
 import '../core/userspace.dart';
 import '../widget/error.dart';
+import '../widget/blockbtn.dart';
 
 class SpaceInfo extends StatefulWidget {
   final UserSpaceArgs args;
@@ -77,6 +79,8 @@ class _SpaceInfoState extends State<SpaceInfo> {
                 icon: const Icon(Icons.logout),
                 label: const Text("退出登录")),
           )));
+    } else if (UserProfiles.blocklist) {
+      lw.add(BlockBtn(uid: info.uid, username: info.username));
     }
     return Column(children: lw);
   }

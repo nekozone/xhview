@@ -65,13 +65,14 @@ class BlockList {
     if (!isloadend) {
       return false;
     }
+    username.removeAt(uid.indexOf(id));
+    uid.remove(id);
     final dbres =
         await DB.db?.delete('blockuser', where: 'uid = ?', whereArgs: [id]);
     if (dbres != null) {
-      username.removeAt(uid.indexOf(id));
-      uid.remove(id);
+      return true;
     }
-    return true;
+    return false;
   }
 
   static Future<bool> delpost(int id) async {
